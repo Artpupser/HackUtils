@@ -1,0 +1,14 @@
+#site-footer {
+  background-color: #222;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+#site-footer .footer-content p {
+  margin: 0;
+  font-size: 14px;
+}
+
