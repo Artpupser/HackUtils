@@ -4,10 +4,21 @@ using Microsoft.Extensions.Logging;
 using PupaMVCF.Framework.Core;
 using PupaMVCF.Framework.Routing;
 
+using RyazanTrip.DataAccess.Postgres;
+
 namespace RyazanTrip.App;
 
-public sealed class RyazanTripApp : WebApp {
-   public RyazanTripApp(IConfiguration configuration, IRouter router, ILogger<RyazanTripApp> logger) : base(
+public sealed class RyazanTripApp : WebApp, IRyazanTripAppSecureContext {
+   public RyazanTripDbContext Context { get; }
+   public static IRyazanTripAppSecureContext Instance { get; private set; } = null!;
+
+   public RyazanTripApp(IConfiguration configuration, IRouter router, ILogger<RyazanTripApp> logger,
+      RyazanTripDbContext dbContext) : base(
       configuration, router,
-      logger) { }
+      logger) {
+      if (Instance != null)
+         throw new InvalidOperationException("TripApp provider has already been configured");
+      Context = dbContext;
+      Instance = this;
+   }
 }

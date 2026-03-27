@@ -5,13 +5,13 @@ namespace RyazanTrip.App.Components;
 
 public record NavbarLink(string Name, string Href);
 
-public sealed class HeaderComponent : Component
-{
-    private static readonly NavbarLink[] NavbarLinks = [
-        new("О нас", "/about_us"),
-        new("Туры", "/tours"),
-        new("Связаться с нами", "/contact_us"),
-    ]; 
+public sealed class HeaderComponent : Component {
+   private static readonly NavbarLink[] NavbarLinks = [
+      new("О нас", "/about_us"),
+      new("Туры", "/tours"),
+      new("Связаться с нами", "/contact_us")
+   ];
+
    public HeaderComponent(IComponentParent? parent) : base(parent) { }
 
    public override Task Html(Request request, Response response, CancellationToken cancellationToken) {
@@ -30,13 +30,12 @@ public sealed class HeaderComponent : Component
                 <div class='collapse navbar-collapse' id='navbarNav'>
                     <ul class='navbar-nav ms-auto'>
                 """);
-      foreach (var navLink in NavbarLinks) {
-          sb.Append($"""
-                     <li class='nav-item'>
-                         <a class='nav-link fs-5 fw-regular' href='{navLink.Href}'>{navLink.Name}</a>
-                     </li>
-                     """);   
-      }
+      foreach (var navLink in NavbarLinks)
+         sb.Append($"""
+                    <li class='nav-item'>
+                        <a class='nav-link fs-5 fw-regular' href='{navLink.Href}'>{navLink.Name}</a>
+                    </li>
+                    """);
       sb.Append(
          "</ul></div></div><div aria-live='polite' aria-atomic='true' class='position-fixed top-0 end-0 p-3 z-3' id='liveAlertPlaceholder'></div></nav>");
       return Task.CompletedTask;
