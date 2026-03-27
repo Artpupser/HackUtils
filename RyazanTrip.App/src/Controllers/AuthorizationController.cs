@@ -18,7 +18,7 @@ public record LoginRequest() {
    [ValidRule(ValidRuleType.MinLength, 3)]
    [ValidRule(ValidRuleType.MaxLength, 24)]
    [JsonPropertyName("username")]
-   public string Username { get; set; } = string.Empty;
+   public string Email { get; set; } = string.Empty;
 
    [ValidRule(ValidRuleType.Need)]
    [ValidRule(ValidRuleType.MinLength, 5)]
@@ -66,15 +66,24 @@ public class AuthorizationController : Controller {
    [ControllerHandler("/api/login", HttpMethodType.POST)]
    private async Task LoginHandler(Request request, Response response, CancellationToken cancellationToken) {
       var content = await request.ReadContentT<LoginRequest>(cancellationToken);
-      if (await ValidatorManager.Valid(request, response, content, cancellationToken)) { }
-
-      await Task.CompletedTask;
+      if (await ValidatorManager.Valid(request, response, content, cancellationToken)) {
+         WebApp.SecureContextInstance.Logger.LogInformation("Login handler invoked, {Email}", content.Email);
+         content.Password = CryptoUtils.ComputeSha256Hash(content.Password);
+         var user = await RyazanTripApp.Instance.Context.UsersSet.Include(userEntity => userEntity.Sessions).FirstOrDefaultAsync(x => x.Email == content.Email, cancellationToken);
+         if (user != null && user.PasswordHash == content.Password) {
+            await RegenerateSessions(user, request, cancellationToken);
+            await SendSuccess(true, response,cancellationToken);
+            return;
+         }
+         response.ErrorStack.PushStack("Password or email not correct");
+      }
    }
 
    [ControllerHandler("/api/registration", HttpMethodType.POST)]
    private async Task RegistrationHandler(Request request, Response response, CancellationToken cancellationToken) {
       var content = await request.ReadContentT<RegistrationRequest>(cancellationToken);
       if (await ValidatorManager.Valid(request, response, content, cancellationToken)) {
+         WebApp.SecureContextInstance.Logger.LogInformation("Registration handler invoked, {Email}", content.Email);
          content.Password = CryptoUtils.ComputeSha256Hash(content.Password);
          content.PasswordRepeat = CryptoUtils.ComputeSha256Hash(content.PasswordRepeat);
          if (content.Password == content.PasswordRepeat) {
@@ -91,12 +100,9 @@ public class AuthorizationController : Controller {
             var entry = await RyazanTripApp.Instance.Context.UsersSet.AddAsync(user, cancellationToken);
             var countSaved = await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
             if (countSaved > 0 && await user.CheckAnyUser(cancellationToken) &&
-                await user.CreateSession(request.Session!, cancellationToken)) {
-               var successResponse = new SuccessResponse {
-                  Success = true
-               };
-               response.WriteTJsonToCache(successResponse);
-               await response.SendAsync(cancellationToken);
+                await RegenerateSessions(user, request, cancellationToken)) {
+               await SendSuccess(true, response, cancellationToken);
+               return;
             }
 
             response.ErrorStack.PushStack("Error user creation");
@@ -104,8 +110,6 @@ public class AuthorizationController : Controller {
 
          response.ErrorStack.PushStack("Passwords not equals");
       }
-
-      await Task.CompletedTask;
    }
 
    [ControllerHandler("/api/logout", HttpMethodType.POST)]
@@ -114,6 +118,25 @@ public class AuthorizationController : Controller {
       if (await ValidatorManager.Valid(request, response, content, cancellationToken)) { }
 
       await Task.CompletedTask;
+   }
+
+   private async Task<bool> RegenerateSessions(UserEntity user, Request request, CancellationToken cancellationToken) {
+      var session = user.Sessions.FirstOrDefault();
+      WebApp.SecureContextInstance.Logger.LogInformation("Regeneration session, {SessionId}", request.Session!.Id);
+      if (session == null) {
+         await user.CreateSession(request.Session!, cancellationToken);
+         return true;
+      }
+      session.ExpiresAt = DateTime.Now.AddDays(1);
+      return await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken) > 0;
+   }
+   
+   private async Task SendSuccess(bool success, Response response, CancellationToken cancellationToken) {
+      var successResponse = new SuccessResponse {
+         Success = success
+      };
+      response.WriteTJsonToCache(successResponse);
+      await response.SendAsync(cancellationToken);
    }
 }
 

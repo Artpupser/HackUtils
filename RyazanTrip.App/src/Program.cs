@@ -22,7 +22,7 @@ public static class Program {
          var routerMapBuilder = new RouterMapBuilder();
          routerMapBuilder.AddMiddlewareRange([new LoggerMiddleware(), new TemplateMiddleware()]);
          routerMapBuilder.AddControllerRange([
-            new StaticController(), new ViewController(), new ErrorController()
+            new StaticController(), new ViewController(), new ErrorController(), new AuthorizationController()
          ]);
          return new Router(routerMapBuilder);
       });
