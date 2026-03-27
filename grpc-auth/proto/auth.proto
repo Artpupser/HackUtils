@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "grpc-auth/proto;proto";
+
+service AuthService {
+  rpc GetYandexAuthURL (Empty) returns (AuthURLResponse);
+  rpc ExchangeCode (CodeRequest) returns (UserResponse);
+}
+
+message Empty {
+  
+}
+message AuthURLResponse { 
+  string Url = 1; 
+}
+message CodeRequest { 
+  string Code = 1;
+ }
+message UserResponse {
+   string Id = 1; 
+   string Login = 2; 
+   string Email = 3;
+ 
+}

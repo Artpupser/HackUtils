@@ -57,11 +57,6 @@ func loadEnv(path string) error {
 }
 
 func main() {
-	// загрузка env
-	if err := loadEnv(".env"); err != nil {
-		panic("Failed to load .env")
-	}
-
 	clientID = "376a55260ae4463592a1f92f16793d81"
 	clientSecret = "c976812b1eca4d28bcaf0e0c46ab34a6"
 	redirectURI = "http://localhost:8080/yandex/callback"
