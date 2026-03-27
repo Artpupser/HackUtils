@@ -1,0 +1,49 @@
+﻿networks:
+  net:  
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: myapp
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    networks:
+      - net
+  
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/ssl
+    depends_on:
+      - generate_cert
+      - backend
+    networks:
+      - net
+  
+  generate_cert:
+    image: alpine:latest
+    volumes:
+      - ./certs:/certs
+    command: >
+      sh -c "
+        apk add --no-cache openssl &&
+        openssl req -x509 -newkey rsa:2048 -nodes -keyout /certs/localhost.key -out /certs/localhost.crt -days 3650 -subj '/CN=localhost' -addext 'subjectAltName=DNS:localhost'
+      "
+    restart: "no"
+    
+  backend:
+    build:
+      context: ./
+    networks:
+      - net
+    environment:
+      DATABASE_CONNECTION_STRING: Host=db;Port=5432;Database=myapp;Username=admin;Password=admin
+    depends_on:
+      - db

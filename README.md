@@ -8,3 +8,20 @@
 - ```git push``` Запушить изменения
 - ```git pull``` Подтянуть изменения
 - ```git reset``` Убрать файлы из комита
+
+### Необходимые приложения на Windows/Linux/MacOs
+- Docker Desktop
+- Git
+- PostgreSql (pgAdmin/dbeaver)
+
+
+### Миграция
+
+```shell
+dotnet tool install --global dotnet-ef
+dotnet ef migrations add initial -s RyazanTrip.App -p RyazanTrip.DataAccess.Postgres
+```
+### Запуск
+```shell
+docker compose up --build
+```
