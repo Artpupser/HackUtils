@@ -2,6 +2,7 @@
 using PupaMVCF.Framework.Views;
 
 using RyazanTrip.App.Components;
+using RyazanTrip.App.Models;
 
 namespace RyazanTrip.App.Views;
 
@@ -24,84 +25,95 @@ public sealed class AccountView : View {
    public override async Task Html(Request request, Response response, CancellationToken cancellationToken) {
       await Start(request, response, string.Empty, cancellationToken);
       var sb = Builder;
+      var userModel = await UserModel.IncludeUserFromRequest(request.Session!, cancellationToken);
+      if (userModel == null) {
+         response.ErrorStack.PushStack("User undefined");
+         return;
+      }
+      var nextLevel = await LevelModel.LoadFromId(userModel.UserEntity.LevelId + 1, cancellationToken);
+      sb.Append($$"""
+         <div class="profile-header">
+         <div class="location-badge">
+         <i class="bi bi-geo-alt-fill"></i>
+         <span>Рязань</span>
+         </div>
+
+         <div class="user-info">
+         <div class="user-avatar">
+         <i class="bi bi-person-fill"></i>
+         </div>
+
+         <div class="user-details">
+         <h1 class="user-name">{{userModel.UserEntity.Username}}</h1>
+
+         <div class="stats-row">
+         <div class="stat-badge level">
+             <span>Уровень:</span>
+             <span class="level-number">{{userModel.UserEntity.LevelEntity!.LevelId}}</span>
+         </div>
+
+         <div class="stat-badge awards">
+             <span>Мои Награды</span>
+         </div>
+         </div>
+
+         <div class="xp-info">
+         <span>До следующего уровня:</span>
+         <span class="xp-needed">{{nextLevel!.LevelEntity.RequiredExp}} опыта</span>
+         </div>
+         </div>
+         </div>
+         </div>
+
+         <div class="profile-content">
+         <div class="content-grid">
+
+         <div class="menu-section">
+
+         <button class="menu-item">
+         <div class="menu-header">
+             <span class="menu-title">Личные Данные:</span>
+             <i class="bi bi-chevron-double-right menu-arrow"></i>
+         </div>
+         </button>
+
+         <button class="menu-item">
+         <div class="menu-header">
+             <span class="menu-title">Мои Туры:</span>
+             <i class="bi bi-chevron-double-right menu-arrow"></i></div> 
+         """);
+      foreach (var userTour in userModel.UserEntity.UserTours) {
+         sb.Append($"""
+                     <div class="tour-card">
+                         <img src="{userTour.TourEntity!.ImageEntity!.ImageId}" 
+                              alt="Тур" 
+                              class="tour-image">
+                         <div class="tour-info">
+                             <div class="tour-date">{userTour.TourEntity.TourTime}</div>
+                             <div class="tour-price">{userTour.TourEntity.Price}</div>
+                             <div class="tour-description">{userTour.TourEntity.Description}</div>
+                         </div>
+                     </div>
+                   """);
+      }
       sb.Append("""
-                <div class="profile-header">
-                    <div class="location-badge">
-                        <i class="bi bi-geo-alt-fill"></i>
-                        <span>Рязань</span>
-                    </div>
-
-                    <div class="user-info">
-                        <div class="user-avatar">
-                            <i class="bi bi-person-fill"></i>
-                        </div>
-                        
-                        <div class="user-details">
-                            <h1 class="user-name">Макарова Алиса Алексеевна</h1>
-                            
-                            <div class="stats-row">
-                                <div class="stat-badge level">
-                                    <span>Уровень:</span>
-                                    <span class="level-number">1</span>
-                                </div>
-                                
-                                <div class="stat-badge awards">
-                                    <span>Мои Награды</span>
-                                </div>
-                            </div>
-                            
-                            <div class="xp-info">
-                                <span>До следующего уровня:</span>
-                                <span class="xp-needed">100 опыта</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-content">
-                    <div class="content-grid">
-                        
-                        <div class="menu-section">
-                            
-                            <button class="menu-item">
-                                <div class="menu-header">
-                                    <span class="menu-title">Личные Данные:</span>
-                                    <i class="bi bi-chevron-double-right menu-arrow"></i>
-                                </div>
-                            </button>
-
-                            <button class="menu-item">
-                                <div class="menu-header">
-                                    <span class="menu-title">Мои Туры:</span>
-                                    <i class="bi bi-chevron-double-right menu-arrow"></i>
-                                </div>
-                                
-                                <div class="tour-card">
-                                    <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=200&h=150&fit=crop" 
-                                         alt="Тур" 
-                                         class="tour-image">
-                                    <div class="tour-info">
-                                        <div class="tour-date">23.06.2026</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="tour-xp">После посещения тура - начислиться 150 опыта!</div>
-                            </button>
-                        </div>
-                        <div class="rewards-card">
-                            <p class="rewards-text">
-                                Копи опыт и получай награды!<br><br>
-                                Получай 50 очков опыта за каждое фото с нашими памятниками грибов!
-                            </p>
-                            
-                            <a href="#" class="rewards-link">
-                                <span>Подробнее</span>
-                                <i class="bi bi-play-fill"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                """);
+               <div class="tour-xp">После посещения тура - начислиться {} опыта!</div>
+           </button>
+       </div>
+       <div class="rewards-card">
+           <p class="rewards-text">
+               Копи опыт и получай награды!<br><br>
+               Получай 50 очков опыта за каждое фото с нашими памятниками грибов!
+           </p>
+           
+           <a href="#" class="rewards-link">
+               <span>Подробнее</span>
+               <i class="bi bi-play-fill"></i>
+           </a>
+       </div>
+      </div>
+      </div>
+      """);
       await End(request, response, cancellationToken);
    }
 

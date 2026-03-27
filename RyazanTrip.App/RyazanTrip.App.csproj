@@ -11,16 +11,20 @@
         <Description>RyazanTrip web site</Description>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="PupaMVCF.Framework" Version="0.1.*"/>
-        <ProjectReference Include="..\RyazanTrip.DataAccess.Postgres\RyazanTrip.DataAccess.Postgres.csproj"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="PupaMVCF.Framework" Version="0.1.*" />
+        <ProjectReference Include="..\RyazanTrip.DataAccess.Postgres\RyazanTrip.DataAccess.Postgres.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <FilesProject Include="$(ProjectDir)/environment/**/*"/>
+        <FilesProject Include="$(ProjectDir)/environment/**/*" />
     </ItemGroup>
     <Target Name="BuildEnv" AfterTargets="Build">
-        <Copy SourceFiles="@(FilesProject)" DestinationFolder="$(TargetDir)/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(FilesProject)" DestinationFolder="$(TargetDir)/%(RecursiveDir)" />
     </Target>
     <Target Name="PublishEnv" AfterTargets="Publish">
-        <Copy SourceFiles="@(FilesProject)" DestinationFolder="$(PublishDir)/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(FilesProject)" DestinationFolder="$(PublishDir)/%(RecursiveDir)" />
     </Target>
 </Project>

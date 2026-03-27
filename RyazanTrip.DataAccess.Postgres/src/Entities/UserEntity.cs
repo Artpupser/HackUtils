@@ -2,12 +2,13 @@
 
 public class UserEntity {
    public int Id { get; set; }
-   public int? RoleId { get; set; }
-   public int? LevelId { get; set; }
+   public int RoleId { get; set; } = 1;
+   public int LevelId { get; set; } = 1;
 
-   public string? Email { get; set; }
-   public string? PasswordHash { get; set; }
-   public string? Username { get; set; }
+   public string Email { get; set; } = string.Empty;
+   public string PasswordHash { get; set; } = string.Empty;
+   public string Username { get; set; } = string.Empty;
+   public string Town { get; set; } = string.Empty;
    public int? Experience { get; set; }
 
    public RoleEntity? RoleEntity { get; set; }

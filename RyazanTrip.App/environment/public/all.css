@@ -1,0 +1,1096 @@
+/* ============================================
+   ОБЩИЕ ПЕРЕМЕННЫЕ И НАСТРОЙКИ
+   ============================================ */
+:root {
+    /* Цвета */
+    --cream: rgba(251, 238, 193, 1);
+    --cream-transparent: rgba(251, 238, 193, 0.8);
+    --cream-light: rgba(251, 238, 193, 0.6);
+    --cream-ultra: rgba(251, 238, 193, 0.3);
+    --olive: rgba(141, 135, 65, 1);
+    --sand: rgba(218, 173, 134, 1);
+    --sand-dark: rgba(188, 152, 106, 1);
+    --white-soft: rgba(255, 255, 255, 0.87);
+    --blue: rgba(74, 144, 164, 1);
+    --blue-dark: rgba(58, 122, 142, 1);
+    --green: rgba(124, 210, 124, 1);
+    --red: rgba(170, 3, 3, 1);
+    
+    /* Параметры */
+    --font: 'Finlandica', sans-serif;
+    --radius-xl: 80px;
+    --radius-lg: 30px;
+    --radius-md: 20px;
+    --radius-sm: 15px;
+    --border-thick: 5px;
+    --border-medium: 3px;
+    --border-thin: 2px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.registration-form .
+
+body {
+    font-family: var(--font);
+    min-height: 100vh;
+}
+
+/* ============================================
+   AUTHORIZATION (авторизация/регистрация)
+   ============================================ */
+.container-fluid {
+    background-color: var(--white-soft) !important;
+    color: var(--olive);
+}
+
+.container-fluid
+
+.auth-card {
+    background-color: var(--white-soft);
+    padding: 40px 50px;
+    max-width: 600px;
+    min-width: 350px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+}
+
+.auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.auth-title {
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--olive);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-toggle {
+    background: transparent;
+    border: var(--border-thin) solid var(--olive);
+    border-radius: var(--radius-xl);
+    padding: 10px 25px;
+    color: var(--olive);
+    font-family: var(--font);
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-toggle:hover {
+    background-color: var(--olive);
+    color: var(--white-soft);
+}
+
+.input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: var(--border-thin) solid var(--olive);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--olive);
+    font-size: 18px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--olive);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.form-control-auth {
+    width: 100%;
+    height: 60px;
+    padding: 12px 20px 12px 20px;
+    background-color: var(--white-soft);
+    border: var(--border-thin) solid var(--olive);
+    border-radius: var(--radius-xl);
+    font-family: var(--font);
+    font-size: 18px;
+    color: var(--olive);
+    outline: none;
+    transition: all 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.input-icon + .form-control-auth,
+.input-wrapper:has(.input-icon) .form-control-auth {
+    padding-left: 65px;
+}
+
+.form-control-auth::placeholder {
+    color: var(--olive);
+    opacity: 0.6;
+}
+
+.form-control-auth:focus {
+    box-shadow: 0 0 0 4px rgba(141, 135, 65, 0.2);
+}
+
+.btn-auth {
+    width: 100%;
+    min-height: 80px;
+    height: auto;
+    background-color: var(--sand);
+    border: none;
+    border-radius: var(--radius-xl);
+    color: var(--cream);
+    font-family: var(--font);
+    font-size: 32px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    padding: 15px 30px;
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.btn-auth:hover {
+    filter: brightness(0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(218, 173, 134, 0.4);
+}
+
+.auth-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.remember-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--olive);
+    cursor: pointer;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: var(--border-thin) solid var(--olive);
+    accent-color: var(--olive);
+    cursor: pointer;
+}
+
+.forgot-link {
+    color: var(--olive);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+.auth-form {
+    opacity: 0;
+    display: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.auth-form.active {
+    display: block;
+    opacity: 1;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 30px 20px;
+        min-width: auto;
+    }
+    .auth-title { font-size: 36px; }
+    .btn-toggle { padding: 8px 15px; font-size: 14px; }
+    .btn-auth { min-height: 60px; font-size: 24px; }
+    .form-control-auth { height: 50px; font-size: 16px; }
+    .input-icon { width: 34px; height: 34px; font-size: 16px; left: 10px; }
+    .input-icon + .form-control-auth,
+    .input-wrapper:has(.input-icon) .form-control-auth { padding-left: 55px; }
+}
+
+/* ============================================
+   BOOKING (бронирование)
+   ============================================ */
+.booking-page {
+    background: linear-gradient(360deg, var(--cream-transparent) 0%, var(--sand) 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.booking-card {
+    width: 100%;
+    max-width: 1400px;
+    padding: 50px 60px;
+}
+
+.booking-header { margin-bottom: 40px; }
+
+.booking-title {
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 1.2;
+    text-transform: capitalize;
+    color: var(--cream);
+    margin: 0 0 20px 0;
+}
+
+.booking-date {
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 1.2;
+    text-transform: capitalize;
+    color: var(--cream);
+    margin: 0;
+}
+
+.booking-content {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 40px;
+}
+
+.booking-details { flex: 1.2; }
+
+.booking-details h3 {
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 50px;
+    color: var(--olive);
+    margin-bottom: 20px;
+}
+
+.details-list {
+    list-style: disc;
+    padding-left: 25px;
+    margin: 0;
+}
+
+.details-list li {
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 35px;
+    color: var(--olive);
+    margin-bottom: 20px;
+}
+
+.booking-services {
+    flex: 1;
+    background: linear-gradient(360deg, var(--cream-transparent) 0%, var(--sand) 150%);
+    border: var(--border-thick) solid var(--sand-dark);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.services-title {
+    font-weight: 600;
+    font-size: 36px;
+    color: var(--olive);
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.btn-guide {
+    width: 100%;
+    min-height: 120px;
+    height: auto;
+    background: linear-gradient(180deg, var(--sand) 0%, var(--sand-dark) 100%);
+    border: none;
+    border-radius: var(--radius-xl);
+    padding: 20px 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-guide:hover {
+    filter: brightness(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(141, 135, 65, 0.3);
+}
+
+.btn-text {
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.1;
+    color: var(--cream);
+    display: block;
+    text-align: left;
+}
+
+.btn-guide-active { box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.2); }
+
+.booking-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-book {
+    width: 100%;
+    max-width: 535px;
+    min-height: 80px;
+    height: auto;
+    background: transparent;
+    border: var(--border-thick) solid var(--sand-dark);
+    border-radius: var(--radius-xl);
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 48px;
+    color: var(--olive);
+    padding: 15px 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: normal;
+    text-align: center;
+}
+
+.btn-book:hover {
+    background: var(--sand-dark);
+    color: var(--cream);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(141, 135, 65, 0.3);
+}
+
+@media (max-width: 992px) {
+    .booking-content { flex-direction: column; gap: 40px; }
+    .booking-title, .booking-date { font-size: 56px; }
+    .btn-text { font-size: 40px; }
+    .btn-book { font-size: 40px; }
+}
+
+@media (max-width: 576px) {
+    .booking-card { padding: 30px 20px; }
+    .booking-title, .booking-date { font-size: 32px; }
+    .booking-details h3 { font-size: 24px; }
+    .details-list li { font-size: 18px; }
+    .services-title { font-size: 28px; }
+    .booking-services { padding: 20px; }
+    .btn-guide { min-height: 90px; padding: 15px 20px; }
+    .btn-text { font-size: 28px; }
+    .btn-book { font-size: 28px; min-height: 60px; }
+}
+
+/* ============================================
+   PROFILE (личный кабинет)
+   ============================================ */
+.profile-header {
+    background: linear-gradient(180deg, rgba(120, 150, 180, 0.95) 0%, rgba(200, 160, 120, 0.9) 100%);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    padding: 30px 40px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.location-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cream);
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.location-badge i { font-size: 20px; }
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    font-size: 40px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.user-details { flex: 1; }
+
+.user-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+.stats-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.stat-badge {
+    background: var(--cream);
+    border-radius: var(--radius-xl);
+    padding: 8px 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.stat-badge.level { color: rgba(66, 139, 193, 1); }
+.stat-badge.awards {
+    color: var(--olive);
+    position: relative;
+    padding-right: 50px;
+}
+
+.level-number {
+    color: var(--olive);
+    font-weight: 700;
+}
+
+.xp-info {
+    color: var(--cream);
+    font-size: 16px;
+    margin-top: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.xp-needed {
+    color: var(--cream);
+    font-weight: 600;
+}
+
+.profile-content { padding: 0 40px 40px; }
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.menu-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.menu-item {
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: var(--border-thin) solid var(--olive);
+}
+
+.menu-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--olive);
+    text-transform: capitalize;
+}
+
+.menu-arrow {
+    color: var(--olive);
+    font-size: 24px;
+}
+
+.tour-card {
+    background: var(--cream-light);
+    border: var(--border-thin) solid var(--olive);
+    border-radius: var(--radius-xl);
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.tour-image {
+    width: 80px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    border: var(--border-thin) solid var(--olive);
+}
+
+.tour-info { flex: 1; }
+
+.tour-date {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--olive);
+}
+
+.tour-xp {
+    font-size: 18px;
+    color: var(--olive);
+    margin-top: 5px;
+}
+
+.rewards-card {
+    background: var(--cream-light);
+    border: var(--border-thin) solid var(--olive);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    position: relative;
+}
+
+.rewards-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--olive);
+    margin-bottom: 20px;
+}
+
+.rewards-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--olive);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    justify-content: flex-end;
+}
+
+.rewards-link i {
+    font-size: 24px;
+    color: var(--olive);
+}
+
+@media (max-width: 992px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .profile-header { padding: 20px; }
+    .user-name { font-size: 22px; }
+    .profile-content { padding: 0 20px 30px; }
+}
+
+@media (max-width: 576px) {
+    .user-info { flex-direction: column; text-align: center; }
+    .stats-row { justify-content: center; }
+    .xp-info { flex-direction: column; gap: 5px; }
+    .tour-card { flex-direction: column; text-align: center; }
+}
+
+/* ============================================
+   SERVICE / TOUR-DETAILS (детали тура)
+   ============================================ */
+.service-page {
+    background: var(--cream);
+    min-height: 100vh;
+}
+
+.tour-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.tour-card {
+    background: var(--cream);
+    width: 100%;
+    max-width: 1100px;
+    border-radius: var(--radius-lg);
+    padding: 40px 50px;
+}
+
+/* Заголовок */
+.tour-title {
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.2;
+    color: var(--olive);
+    margin-bottom: 20px;
+}
+
+/* ==================== ВЕРТИКАЛЬНЫЙ LAYOUT ==================== */
+/* 
+   Структура как на макете:
+   - Фото слева (фиксированная ширина)
+   - Вся информация справа от фото
+   - "Что вас ждет" под фото и информацией
+*/
+
+.tour-main {
+    display: flex;           /* ← горизонтально: фото + инфо */
+    flex-direction: row;     /* ← строка, не колонка */
+    gap: 30px;
+    margin-bottom: 30px;
+    align-items: flex-start; /* ← выравнивание по верху */
+}
+
+/* Фото слева */
+.tour-image-wrapper {
+    flex: 0 0 350px;         /* ← фиксированная ширина 350px, не растягивается */
+    border: var(--border-thick) solid var(--sand-dark);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    height: 450px;           /* ← фиксированная высота */
+}
+
+.tour-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Информация справа от фото */
+.tour-info {
+    flex: 1;                 /* ← занимает оставшееся пространство */
+    display: flex;
+    flex-direction: column;  /* ← внутри колонка: элементы друг под другом */
+    gap: 10px;
+}
+
+/* Дата */
+.tour-date {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.2;
+    color: var(--sand-dark);
+    margin: 0;
+}
+
+/* Подзаголовок */
+.tour-subtitle {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--olive);
+    margin: 0;
+}
+
+/* Описание */
+.tour-description {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--olive);
+    margin: 10px 0;
+    opacity: 0.9;
+}
+
+/* Форматы */
+.tour-formats {
+    margin: 10px 0;
+}
+
+.tour-formats h4 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--olive);
+    margin: 0 0 10px 0;
+}
+
+.tour-formats ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.tour-formats li {
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--olive);
+    margin-bottom: 5px;
+}
+
+/* Продолжительность */
+.tour-duration {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 10px 0;
+    color: var(--olive);
+}
+
+/* Кнопка */
+.booking-footer {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 15px;
+}
+
+.btn-book {
+    width: auto;
+    min-height: 50px;
+    background: transparent;
+    border: var(--border-thick) solid var(--sand-dark);
+    border-radius: var(--radius-xl);
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--olive);
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-book:hover {
+    background: var(--sand-dark);
+    color: var(--cream);
+}
+
+/* ==================== "ЧТО ВАС ЖДЕТ" - ПОД ОСНОВНЫМ БЛОКОМ ==================== */
+.tour-expect {
+    border-top: var(--border-thin) solid var(--sand-dark);
+    padding-top: 20px;
+    margin-top: 0;           /* ← убран отступ, идёт сразу под tour-main */
+}
+
+.tour-expect h3 {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--olive);
+    margin: 0 0 15px 0;
+}
+
+.expect-intro {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--olive);
+    margin: 0 0 10px 0;
+}
+
+.expect-list {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.expect-list li {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--olive);
+    margin-bottom: 8px;
+}
+
+/* ==================== АДАПТИВ ==================== */
+@media (max-width: 992px) {
+    .tour-main {
+        flex-direction: column;  /* ← на планшете вертикально */
+    }
+    .tour-image-wrapper {
+        flex: none;              /* ← убираем фиксированную ширину */
+        width: 100%;
+        height: 300px;
+    }
+    .tour-title { font-size: 36px; }
+    .tour-date { font-size: 24px; }
+    .tour-subtitle { font-size: 22px; }
+}
+
+@media (max-width: 576px) {
+    .tour-card { padding: 25px 20px; }
+    .tour-title { font-size: 28px; }
+    .tour-date { font-size: 20px; }
+    .tour-subtitle { font-size: 18px; }
+    .tour-formats h4, .tour-expect h3 { font-size: 20px; }
+    .btn-book { font-size: 18px; padding: 8px 20px; }
+}
+
+/* ============================================
+   ADMIN (админ панель)
+   ============================================ */
+.admin-page {
+    background: var(--cream);
+    min-height: 100vh;
+    padding: 40px 30px;
+}
+
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-title {
+    display: inline-block;
+    background: var(--blue);
+    color: var(--cream);
+    font-weight: 600;
+    font-size: 24px;
+    padding: 15px 50px;
+    border-radius: var(--radius-xl);
+    margin: 0 0 30px 0;
+    text-align: center;
+}
+
+.requests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    border: var(--border-medium) solid var(--olive);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    background: transparent;
+}
+
+.request-card {
+    background: var(--blue);
+    border-radius: var(--radius-md);
+    padding: 20px 25px;
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.request-card:hover {
+    background: var(--blue-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.request-number {
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--cream);
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.request-info {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 8px 0;
+    color: var(--cream);
+}
+
+.request-info strong { font-weight: 600; }
+
+.request-photo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.request-photo span { font-size: 16px; }
+
+.request-photo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: var(--border-thin) solid var(--cream);
+}
+
+.request-action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.request-action i { font-size: 12px; }
+
+/* ============================================
+   MODAL (всплывающее окно)
+   ============================================ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-window {
+    background: var(--cream);
+    border-radius: var(--radius-lg);
+    padding: 40px 50px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    transition: transform 0.3s;
+}
+
+.modal-overlay.active .modal-window { transform: scale(1); }
+
+.modal-title {
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--blue);
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.modal-info {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--olive);
+    margin: 0 0 10px 0;
+}
+
+.modal-info strong { font-weight: 600; }
+
+.modal-photo-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.modal-photo-section span {
+    display: block;
+    font-size: 16px;
+    color: var(--olive);
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#modal-image {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: var(--border-medium) solid var(--olive);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.btn-confirm {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--green);
+    border: none;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(124, 179, 66, 0.4);
+}
+
+.btn-confirm:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(124, 179, 66, 0.6);
+}
+
+.btn-reject {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--red);
+    border: none;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(229, 57, 53, 0.4);
+}
+
+.btn-reject:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(229, 57, 53, 0.6);
+}
+
+@media (max-width: 768px) {
+    .admin-page { padding: 20px 15px; }
+    .admin-title { font-size: 20px; padding: 12px 30px; }
+    .requests-grid { grid-template-columns: 1fr; padding: 20px; }
+    .modal-window { padding: 30px 25px; }
+    .modal-title { font-size: 22px; }
+    .modal-info { font-size: 16px; }
+    .btn-confirm, .btn-reject { width: 60px; height: 60px; font-size: 30px; }
+}

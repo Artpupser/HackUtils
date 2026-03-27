@@ -25,7 +25,8 @@ public sealed class AboutUsView : View {
       await Start(request, response,"body_about_us", cancellationToken);
       var sb = Builder;
       sb.Append($"""
-                 <section class="section_about_us">
+                 <div class='container' id='aboutus'> 
+                     <section class="section_about_us">
                         <h1 class="h1_about_us">О нашем стартапе:</h1>
                         Ryazan Trip родился из любви к городу и <br>
                         желания показать его таким, каким мы сами <br>
@@ -42,8 +43,9 @@ public sealed class AboutUsView : View {
                         <br>
                         Никакой суеты. Только вы, город и те, кто знает <br>
                         его лучше всего.
-                    </section>
-                    <img src="/api/public/files?name=bg_for_abo.webp" alt="image" class="bg_for_abo">
+                     </section>
+                     <img src="/api/public/files?name=bg_for_abo.webp" alt="image" class="bg_for_abo">
+                 </div>
                  """);
       await End(request, response, cancellationToken);
    }

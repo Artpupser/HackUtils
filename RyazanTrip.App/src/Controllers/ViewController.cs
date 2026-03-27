@@ -6,6 +6,7 @@ using PupaMVCF.Framework.Middleware;
 using PupaMVCF.Framework.Views;
 
 using RyazanTrip.App.Middleware;
+using RyazanTrip.App.Models;
 
 namespace RyazanTrip.App.Controllers;
 
@@ -23,12 +24,24 @@ public sealed class ViewController : Controller {
 
    [ControllerHandler("/admin", HttpMethodType.GET)]
    private async Task AdminPageHandler(Request request, Response response, CancellationToken cancellationToken) {
-      await SendPage(new AdminView(), request, response, cancellationToken);
+      var userModel = await UserModel.LoadUserFromRequest(request.Session!, cancellationToken);
+      if (userModel != null && userModel.CheckAdmin()) {
+         await SendPage(new AdminView(), request, response, cancellationToken);
+         return;
+      }
+      response.Redirect("/authorization");
+      await response.SendAsync(cancellationToken);
    }
 
    [ControllerHandler("/account", HttpMethodType.GET)]
    private async Task AccountPageHandler(Request request, Response response, CancellationToken cancellationToken) {
-      await SendPage(new AccountView(), request, response, cancellationToken);
+      var userModel = await UserModel.LoadUserFromRequest(request.Session!, cancellationToken);
+      if (userModel != null && userModel.Check()) {
+         await SendPage(new AccountView(), request, response, cancellationToken);
+         return;
+      }
+      response.Redirect("/authorization");
+      await response.SendAsync(cancellationToken);
    }
 
    [ControllerHandler("/about_us", HttpMethodType.GET)]

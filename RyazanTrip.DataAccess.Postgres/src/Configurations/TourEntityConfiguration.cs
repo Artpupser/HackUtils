@@ -9,6 +9,8 @@ public class TourEntityConfiguration : IEntityTypeConfiguration<TourEntity> {
    public void Configure(EntityTypeBuilder<TourEntity> builder) {
       builder.ToTable("tours");
 
+      builder.Property(x => x.TourTime);
+
       builder.HasKey(x => x.TourId);
 
       builder.Property(x => x.Title)

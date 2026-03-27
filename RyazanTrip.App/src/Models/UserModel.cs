@@ -1,25 +1,41 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 using RyazanTrip.DataAccess.Postgres.Entities;
 
 namespace RyazanTrip.App.Models;
 
 public sealed class UserModel {
-   private UserEntity _userEntity;
-   private SessionEntity _sessionEntity;   
+   public UserEntity UserEntity { get; }
+   public SessionEntity SessionEntity { get; }
+
    private UserModel(UserEntity userEntity, SessionEntity sessionEntity) {
-      _userEntity = userEntity;
-      _sessionEntity = sessionEntity;
+      UserEntity = userEntity;
+      SessionEntity = sessionEntity;
    }
 
-   public async Task<UserModel?> LoadUserFromRequest(ISession session) {
-      var sessionEntity = RyazanTripApp.Instance.Context.SessionsSet.FirstOrDefault(x => x.Token == session.Id);
+   public static async Task<UserModel?> LoadUserFromRequest(ISession session, CancellationToken cancellationToken) {
+      var sessionEntity = await RyazanTripApp.Instance.Context.SessionsSet.FirstOrDefaultAsync(x => x.Token == session.Id, cancellationToken: cancellationToken);
       if (sessionEntity != null) {
-         var userEntity = RyazanTripApp.Instance.Context.UsersSet.FirstOrDefault(x => x.Id == sessionEntity.UserId);
+         var userEntity = await RyazanTripApp.Instance.Context.UsersSet.FirstOrDefaultAsync(x => x.Id == sessionEntity.UserId, cancellationToken: cancellationToken);
          if (userEntity != null) {
             return new UserModel(userEntity, sessionEntity);
          }
       }
       return null;
    }
+
+   public static async Task<UserModel?> IncludeUserFromRequest(ISession session, CancellationToken cancellationToken) {
+      var sessionEntity = await RyazanTripApp.Instance.Context.SessionsSet.FirstOrDefaultAsync(x => x.Token == session.Id, cancellationToken: cancellationToken);
+      if (sessionEntity != null) {
+         var userEntity = await RyazanTripApp.Instance.Context.UsersSet.Include(userEntity => userEntity.UserTours).FirstOrDefaultAsync(x => x.Id == sessionEntity.UserId, cancellationToken: cancellationToken);
+         if (userEntity != null) {
+            return new UserModel(userEntity, sessionEntity);
+         }
+      }
+      return null;
+   }
+
+   public bool Check() => SessionEntity.VerifyExpires();
+   public bool CheckAdmin() => SessionEntity.VerifyExpires() && UserEntity.RoleId > 1;
 }

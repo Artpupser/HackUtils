@@ -20,6 +20,9 @@
 ```shell
 dotnet tool install --global dotnet-ef
 dotnet ef migrations add initial -s RyazanTrip.App -p RyazanTrip.DataAccess.Postgres
+dotnet ef migrations add InitialCreate
+dotnet ef database update -s ..\RyazanTrip.App\
+
 ```
 ### Запуск
 ```shell

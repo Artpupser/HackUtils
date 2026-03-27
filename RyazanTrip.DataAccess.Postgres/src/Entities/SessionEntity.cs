@@ -11,6 +11,6 @@ public class SessionEntity {
    public UserEntity? UserEntity { get; set; }
 
    public bool VerifyExpires() {
-      return ExpiresAt > DateTime.Now;
+      return ExpiresAt > DateTime.UtcNow;
    }
 }

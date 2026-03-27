@@ -13,5 +13,11 @@ public class RoleEntityConfiguration : IEntityTypeConfiguration<RoleEntity> {
 
       builder.Property(x => x.Name)
          .HasMaxLength(64);
+
+      builder.HasData(
+         new RoleEntity { RoleId = 1, Name = "User" },
+         new RoleEntity { RoleId = 2, Name = "Admin" }
+      );
+      
    }
 }

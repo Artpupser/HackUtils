@@ -20,6 +20,9 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity> {
       builder.Property(x => x.Username)
          .HasMaxLength(64);
 
+      builder.Property(x => x.Town)
+         .HasMaxLength(64);
+
       builder.HasOne(x => x.RoleEntity)
          .WithMany(x => x.Users)
          .HasForeignKey(x => x.RoleId)
