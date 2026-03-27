@@ -26,16 +26,7 @@ public sealed class MainView : View {
       await Start(request, response, string.Empty, cancellationToken);
       var sb = Builder;
       sb.Append("""
-                <section id='hero' class='bg-black text-light d-flex align-items-center py-5 min-vh-100'>
-                    <div class='container'>
-                        <div class='row justify-content-center text-center'>
-                            <div class='col-lg-8 col-xl-8 p-5'>
-                                <h1 class='fade show display-3 fw-bold mb-4'>Привет мир! 🌍</h1>
-                                <p class='lead fs-2'>Начало начал!</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                
                 """);
       sb.Append(TagJs(response, "index.js"));
       await End(request, response, cancellationToken);

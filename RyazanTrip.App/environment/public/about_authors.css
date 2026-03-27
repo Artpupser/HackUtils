@@ -1,0 +1,29 @@
+.body_about_authors{
+    background-color: #FBEEC1;
+}
+
+.bg_for_abo{
+    height: 60dvh;
+    z-index: 10;
+    position: absolute; 
+    right: 0;          
+    bottom: 0;         
+}
+
+.section_about_authors{
+    color: #8D8741;
+    font-size: 25px;
+    border: 2px solid #8D8741;
+    border-radius: 20px;
+    padding: 5dvh;
+    margin: 5dvh;
+}
+
+.h1_about_authors{
+    background: linear-gradient(to bottom, #DAAD86, #BC986A);
+    border-radius: 50px;
+    width: 30%;
+    padding: 3dvh;
+    font-size: 35px;
+    color: #FBEEC1;
+}

@@ -9,7 +9,7 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity> {
    public void Configure(EntityTypeBuilder<UserEntity> builder) {
       builder.ToTable("users");
 
-      builder.HasKey(x => x.UserId);
+      builder.HasKey(x => x.Id);
 
       builder.Property(x => x.Email)
          .HasMaxLength(254);

@@ -144,7 +144,7 @@ public static class EntityExtensions {
    public static async Task<bool> CreateSession(this UserEntity userEntity, ISession session,
       CancellationToken cancellationToken) {
       var sessionEntity = new SessionEntity {
-         UserId = userEntity.UserId,
+         UserId = userEntity.Id,
          Token = session.Id,
          CreatedAt = DateTime.Now,
          ExpiresAt = DateTime.Now.AddDays(1)
@@ -163,8 +163,4 @@ public static class EntityExtensions {
       return await RyazanTripApp.Instance.Context.SessionsSet.AnyAsync(x => x.Token == entity.Token,
          cancellationToken);
    }
-}
-
-public sealed class SessionUser {
-   public SessionUser() { }
 }

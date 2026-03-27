@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 
 using PupaMVCF.Framework.Core;
 using PupaMVCF.Framework.Routing;
+using PupaMVCF.Framework.Views;
 
 using RyazanTrip.DataAccess.Postgres;
 

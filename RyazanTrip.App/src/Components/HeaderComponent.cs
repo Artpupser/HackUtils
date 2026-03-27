@@ -15,29 +15,55 @@ public sealed class HeaderComponent : Component {
    public HeaderComponent(IComponentParent? parent) : base(parent) { }
 
    public override Task Html(Request request, Response response, CancellationToken cancellationToken) {
-      var sb = Builder;
-      sb.Append("""
-                <nav class='navbar navbar-expand-lg navbar-dark bg-dark sticky-top'>
-                  <div class='container'>
-                      <a class='navbar-brand fw-bold fs-3 d-flex align-items-center' href='#'>
-                          <img src='/api/public/files?name=icon.webp' alt='icon' width='40' height='40' class='me-3 rounded'>
-                """);
-      sb.Append($"<span>{CurrentView.Title}</span></a>");
-      sb.Append("""
-                <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav'>
-                    <span class='navbar-toggler-icon'></span>
-                </button>
-                <div class='collapse navbar-collapse' id='navbarNav'>
-                    <ul class='navbar-nav ms-auto'>
-                """);
-      foreach (var navLink in NavbarLinks)
-         sb.Append($"""
-                    <li class='nav-item'>
-                        <a class='nav-link fs-5 fw-regular' href='{navLink.Href}'>{navLink.Name}</a>
-                    </li>
-                    """);
-      sb.Append(
-         "</ul></div></div><div aria-live='polite' aria-atomic='true' class='position-fixed top-0 end-0 p-3 z-3' id='liveAlertPlaceholder'></div></nav>");
-      return Task.CompletedTask;
+        var sb = Builder;
+
+        sb.Append("""
+            <header class="py-3" style="background-color: #8D8741;">
+                <div class="container d-flex align-items-center justify-content-between">
+                    <a href='/' class="d-flex align-items-center gap-3">
+                        <img src="/api/public/files?name=logo.webp" alt="logo" class="rounded-circle" style="width:80px; height:80px; background-color:white;">
+                        <span class="fw-normal" style="font-size:40px;">Ryazan Trip</span>
+                    </a>
+                    <nav class="d-none d-md-flex gap-5">
+        """);
+
+        foreach (var navLink in NavbarLinks)
+            sb.Append($"""
+                            <a href="{navLink.Href}" class="text-decoration-none" style="font-size:22px; transition:0.3s;">{navLink.Name}</a>
+                        """);
+
+        sb.Append("""
+                    </nav>
+                    <div class="d-md-none">
+                        <button class="btn btn-burger" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+                            ☰
+                        </button>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="d-flex align-items-center">
+                            <a href="#">
+                                <img src="/api/public/files?name=person-circle.webp" alt="profile" class="rounded-circle" style="width:80px; height:80px; background-color:#8D8741;">
+                            </a>
+                        </div>
+                    </div>
+            
+                </div>
+            
+                <div class="collapse" id="mobileMenu">
+                    <div class="p-3 d-flex flex-column gap-2">
+        """);
+
+        foreach (var navLink in NavbarLinks)
+            sb.Append($"""
+                        <a href="{navLink.Href}" class="text-decoration-none" style="font-size:22px; transition:0.3s;">{navLink.Name}</a>
+                        """);
+
+        sb.Append("""
+                    </div>
+                </div>
+            </header>
+            """);
+
+        return Task.CompletedTask;
    }
 }

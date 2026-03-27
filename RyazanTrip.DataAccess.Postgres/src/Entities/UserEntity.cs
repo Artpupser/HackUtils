@@ -1,7 +1,7 @@
 ﻿namespace RyazanTrip.DataAccess.Postgres.Entities;
 
 public class UserEntity {
-   public int UserId { get; set; }
+   public int Id { get; set; }
    public int? RoleId { get; set; }
    public int? LevelId { get; set; }
 
