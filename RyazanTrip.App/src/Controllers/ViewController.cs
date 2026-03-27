@@ -40,7 +40,7 @@ public sealed class ViewController : Controller {
    
    [ControllerHandler("/achievement", HttpMethodType.GET)]
    private async Task AchievementPageHandler(Request request, Response response, CancellationToken cancellationToken) {
-      await SendPage(new AboutUsView(), request, response, cancellationToken);
+      await SendPage(new MushroomsView(), request, response, cancellationToken);
    }
    
    private static async Task SendPage(View view, Request request, Response response,
