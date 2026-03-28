@@ -35,23 +35,6 @@ type YandexUser struct {
 	DefaultEmail string `json:"default_email"`
 }
 
-func startHTTPCallbackServer() {
-	http.HandleFunc("/yandex/callback", func(w http.ResponseWriter, r *http.Request) {
-		code := r.URL.Query().Get("code")
-		fmt.Println("🔥 YANDEX RETURNED CODE:")
-		fmt.Println(code)
-		fmt.Fprintf(w, "Login success! Return to console.")
-	})
-
-	go func() {
-		log.Println("🌐 HTTP callback server started on :8080")
-		err := http.ListenAndServe(":8080", nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
-}
-
 func (s *server) GetYandexAuthURL(ctx context.Context, e *pb.Empty) (*pb.AuthURLResponse, error) {
 	authURL := fmt.Sprintf(
 		"https://oauth.yandex.ru/authorize?response_type=code&client_id=%s&redirect_uri=%s",
@@ -126,7 +109,6 @@ func getUser(token string) (*YandexUser, error) {
 }
 
 func main() {
-	startHTTPCallbackServer()
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatal(err)
