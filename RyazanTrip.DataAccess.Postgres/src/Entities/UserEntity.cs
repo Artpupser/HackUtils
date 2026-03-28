@@ -10,15 +10,11 @@ public class UserEntity {
    public string Username { get; set; } = string.Empty;
    public string Town { get; set; } = string.Empty;
    public int? Experience { get; set; }
-
    public RoleEntity? RoleEntity { get; set; }
    public LevelEntity? LevelEntity { get; set; }
-
    public ICollection<SessionEntity> Sessions { get; set; } = new List<SessionEntity>();
    public ICollection<UserTourEntity> UserTours { get; set; } = new List<UserTourEntity>();
-
    public ICollection<MushroomSubmissionEntity> MushroomSubmissions { get; set; } =
       new List<MushroomSubmissionEntity>();
-
    public ICollection<UserBonusEntity> UserBonuses { get; set; } = new List<UserBonusEntity>();
 }

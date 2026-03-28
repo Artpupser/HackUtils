@@ -28,20 +28,14 @@ public sealed class MushroomMapView : View
 
         var sb = Builder;
         sb.Append($$"""
-           <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+           <link nonce='{{response.Nonce}}' rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
            <script nonce='{{response.Nonce}}' src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
            <script nonce='{{response.Nonce}}' src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
            """);
         sb.Append($"""
-        <!-- Leaflet -->
-       
-
         <div id="map"></div>
-
         <div id="infoBox">Нажмите «Начать квест»</div>
         <button id="startBtn">📍 Начать квест</button>
-
-        <!-- Модальное окно сканера -->
         <div id="scannerModal">
           <div id="scannerWindow">
             <div id="scannerHeader">
@@ -51,8 +45,6 @@ public sealed class MushroomMapView : View
             <div id="scanner"></div>
           </div>
         </div>
-
-        <!-- Финальное окно -->
         <div id="finalModal" style="display:none;">
           <h2>Поздравляем! 🎉</h2>
           <p id="finalXP">Вы прошли квест! Получено XP: 0</p>
