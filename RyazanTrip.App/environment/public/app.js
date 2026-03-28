@@ -114,3 +114,22 @@ function showFinalModal(){
 document.getElementById("rewardBtn").onclick=()=>{
  window.location.href="https://yourwebsite.com/reward"; // <-- замените на свою ссылку
 }
+
+
+let currentXP = 45; // общее количество опыта (0–100)
+
+function updateAllRewards(xp) {
+  const fills = document.querySelectorAll('.tour-reward-progress-fill');
+  const texts = document.querySelectorAll('.progressText');
+
+  fills.forEach(fill => {
+    fill.style.width = xp + '%';
+  });
+
+  texts.forEach(text => {
+    text.textContent = Math.floor(xp) + '%';
+  });
+}
+
+// запуск
+updateAllRewards(currentXP);
