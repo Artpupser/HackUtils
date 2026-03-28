@@ -14,7 +14,8 @@ public sealed class RyazanTripApp : WebApp, IRyazanTripAppSecureContext {
    public YandexMicroService YandexMicroMicroService { get; }
    public RyazanTripDbContext Context { get; }
    public static IRyazanTripAppSecureContext Instance { get; private set; } = null!;
-
+   [ConfigurationKeyName("SelectelAccess")]
+   public static ushort Port { get; private set; } = 50001;
    public RyazanTripApp(IConfiguration configuration, IRouter router, ILogger<RyazanTripApp> logger,
       RyazanTripDbContext dbContext, YandexMicroService yandexMicroService) : base(
       configuration, router,

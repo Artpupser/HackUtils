@@ -7,7 +7,7 @@ public sealed class FooterComponent : Component {
    public FooterComponent(IComponentParent? parent) : base(parent) { }
    private static readonly NavbarLink[] NavbarLinks = [
       new("О нашем стартапе", "/about_us"),
-      new("Об авторах", "/authors_us"),
+      new("Об авторах", "/author_us"),
    ];
    public override Task Html(Request request, Response response, CancellationToken cancellationToken) {
       var sb = Builder;
