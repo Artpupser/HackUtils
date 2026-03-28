@@ -23,8 +23,8 @@ function showLoginForm() {
     }, 300);
 }
 
-const loginForm = document.getElementById("login_form");
-const registrationForm = document.getElementById("registration_form");
+const loginForm = document.getElementById("login-form");
+const registrationForm = document.getElementById("register-form");
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     try {

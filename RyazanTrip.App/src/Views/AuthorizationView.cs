@@ -29,8 +29,6 @@ public sealed class AuthorizationView : View {
       sb.Append("""
                 <div class="tour-auth-container">
                        <div class="tour-auth-card">
-                           
-                           <!-- ФОРМА ВХОДА -->
                            <div id="login-form" class="tour-auth-form active">
                                <div class="tour-auth-header">
                                    <h1 class="tour-auth-title">ВХОД</h1>
@@ -95,7 +93,6 @@ public sealed class AuthorizationView : View {
                         </div>
                 
                         <button type="submit" class="tour-btn-auth">зарегистрироваться</button>
-                                  
                 """);
       await RyazanTripApp.Instance.YandexMicroMicroService.Connect(cancellationToken);
       var url = await RyazanTripApp.Instance.YandexMicroMicroService.GetAuthUrlAsync(cancellationToken);

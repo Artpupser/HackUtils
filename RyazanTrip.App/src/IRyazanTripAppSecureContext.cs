@@ -5,5 +5,7 @@ namespace RyazanTrip.App;
 
 public interface IRyazanTripAppSecureContext {
    public YandexMicroService YandexMicroMicroService { get; }
+   
    public RyazanTripDbContext Context { get; }
+   
 }

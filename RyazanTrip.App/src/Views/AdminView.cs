@@ -146,13 +146,7 @@ public sealed class AdminView : View
     </div>
 </div>
 """);
-
-
-
-        sb.Clear();
         sb.Append(TagJs(response, "admin.js"));
-        sb.Append(TagJs(response, "bootstrap.js"));
-       
         await End(request, response, cancellationToken);
     }
 

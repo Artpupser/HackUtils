@@ -82,20 +82,15 @@ public sealed class ProfileView : View {
                   </div>
               </div>
           </div>
-
-       <!-- ОСНОВНОЙ КОНТЕНТ -->
        <div class="tour-profile-content">
            <div class="tour-content-grid">
-               
                <div class="tour-menu-section">
-                   
                    <button class="tour-menu-item">
                        <div class="tour-menu-header">
                            <span class="tour-menu-title">Личные Данные:</span>
                            <i class="bi bi-chevron-double-right tour-menu-arrow"></i>
                        </div>
                    </button>
-
                    <button class="tour-menu-item">
                        <div class="tour-menu-header">
                            <span class="tour-menu-title">Мои Туры:</span>
@@ -104,10 +99,10 @@ public sealed class ProfileView : View {
    """);
             if (userModel.UserEntity.UserTours.Any()) {
              foreach (var userTour in userModel.UserEntity.UserTours) {
-                 var imageUrl = userTour.TourEntity?.ImageEntity?.Url ?? "/api/public/files?name=default-tour.webp";
-                 sb.Append($$"""
+                 var imageUrl = userTour.TourEntity?.ImageEntity?.Url ?? "/api/public/files?name=default_tour.webp";
+                 sb.Append($"""
                              <div class="tour-tour-card">
-                                 <img src="{{imageUrl}}" 
+                                 <img src="{imageUrl}" 
                                       alt="Тур" 
                                       class="tour-tour-image">
                                  <div class="tour-tour-info">

@@ -42,6 +42,8 @@ public class YandexAuthorizationController : Controller {
          WebApp.SecureContextInstance.Logger.LogWarning("User entity created...");
          if (await userEntity.CheckAnyUser(cancellationToken)) {
             response.ErrorStack.PushStack($"User with {userEntity.Email}  already created");
+            response.Redirect("/authorization");
+            await response.SendAsync(cancellationToken);
             return;
          }
 
@@ -63,6 +65,8 @@ public class YandexAuthorizationController : Controller {
       } catch (Exception e) {
          response.ErrorStack.PushStack($"User with {e}  already created");
          WebApp.SecureContextInstance.Logger.LogError("Error in Yandex callback: {Message}", e);
+         response.Redirect("/authorization");
+         await response.SendAsync(cancellationToken);
       }
    }
 }
