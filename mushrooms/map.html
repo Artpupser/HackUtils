@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Грибной квест - Ryazan Trip</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- HTML5 QR code -->
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div id="infoBox">Нажмите «Начать квест»</div>
+<button id="startBtn">📍 Начать квест</button>
+
+<!-- Модальное окно сканера -->
+<div id="scannerModal">
+  <div id="scannerWindow">
+    <div id="scannerHeader">
+      <span>Сканируйте QR гриба 🍄</span>
+      <button id="closeScanner">✕</button>
+    </div>
+    <div id="scanner"></div>
+  </div>
+</div>
+
+<!-- Финальное окно -->
+
+<div id="finalModal" style="display:none;">
+  <h2>Поздравляем! 🎉</h2>
+  <p id="finalXP">Вы прошли квест! Получено XP: 0</p>
+  <button id="rewardBtn">За наградой!</button>
+</div>
+
+
+<script src="app.js"></script>
+</body>
+</html>
