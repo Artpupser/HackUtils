@@ -1613,12 +1613,12 @@ a.tour-btn-auth:hover {
   background-size: cover;
   background-position: center;
 }
-.slide:nth-child(1) { background-image: url('rzn_kremlin_tour.webp'); }
-.slide:nth-child(2) { background-image: url('cater_tour.webp'); }
-.slide:nth-child(3) { background-image: url('fish_village_tour.webp'); }
-.slide:nth-child(4) { background-image: url('pochtovaya_street_tour.webp'); }
-.slide:nth-child(5) { background-image: url('old_ryazan_tour.webp'); }
-.slide:nth-child(6) { background-image: url('old_town_hotel_tour.webp'); }
+.slide:nth-child(1) { background-image: url('https://afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/rzn_kremlin_tour.webp'); }
+.slide:nth-child(2) { background-image: url('https://afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/cater_tour.webp'); }
+.slide:nth-child(3) { background-image: url('https://afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/fish_village_tour.webp'); }
+.slide:nth-child(4) { background-image: url('https://afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/pochtovaya_street_tour.webp'); }
+.slide:nth-child(5) { background-image: url('https://afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/old_ryazan_tour.webp'); }
+.slide:nth-child(6) { background-image: url('https://afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/old_town_hotel_tour.webp'); }
 
 .btn_slide {
   border: none;

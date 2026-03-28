@@ -21,8 +21,9 @@ public sealed class TourInfoView : View {
 
    #endregion
 
-   public override Task Html(Request request, Response response, CancellationToken cancellationToken) {
-      throw new NotImplementedException();
+   public override async Task Html(Request request, Response response, CancellationToken cancellationToken) {
+      await Start(request, response, string.Empty, cancellationToken);
+      await End(request, response, cancellationToken);
    }
 
    public override string Title => "Информация о туре";

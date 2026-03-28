@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PupaMVCF.Framework.Controllers;
 using PupaMVCF.Framework.Middleware;
 using PupaMVCF.Framework.Routing;
+using PupaMVCF.Framework.Views;
 
 using RyazanTrip.App.Controllers;
 using RyazanTrip.App.Middleware;
@@ -11,7 +12,7 @@ using RyazanTrip.DataAccess.Postgres;
 
 namespace RyazanTrip.App;
 
-public static class Program {
+public static class Program  {
    private static async Task Main(string[] args) {
       var builder = Host.CreateApplicationBuilder(args);
       builder.Services.AddDbContext<RyazanTripDbContext>(options => {
@@ -23,7 +24,7 @@ public static class Program {
          var routerMapBuilder = new RouterMapBuilder();
          routerMapBuilder.AddMiddlewareRange([new LoggerMiddleware(), new TemplateMiddleware()]);
          routerMapBuilder.AddControllerRange([
-            new StaticController(), new ViewController(), new ErrorController(), new AuthorizationController()
+            new StaticController(), new ViewController(), new ErrorController(), new AuthorizationController(), new YandexAuthorizationController()
          ]);
          return new Router(routerMapBuilder);
       });

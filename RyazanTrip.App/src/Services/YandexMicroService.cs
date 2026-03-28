@@ -24,7 +24,7 @@ public sealed class YandexMicroService : IAnyMicroService {
    {
       var response = await _client.ExchangeCodeAsync(new YandexCodeRequest
       {
-         Code = code
+         Code = code,
       }, cancellationToken: cancellationToken);
       return response;
    }

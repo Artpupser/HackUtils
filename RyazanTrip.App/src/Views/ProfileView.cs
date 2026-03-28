@@ -107,7 +107,7 @@ public sealed class ProfileView : View {
                  var imageUrl = userTour.TourEntity?.ImageEntity?.Url ?? "/api/public/files?name=default-tour.webp";
                  sb.Append($$"""
                              <div class="tour-tour-card">
-                                 <img src="{imageUrl}" 
+                                 <img src="{{imageUrl}}" 
                                       alt="Тур" 
                                       class="tour-tour-image">
                                  <div class="tour-tour-info">
