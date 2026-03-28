@@ -147,13 +147,12 @@ public sealed class AdminView : View
 </div>
 """);
 
-        await response.WriteAsync(sb.ToString(), cancellationToken);
+
 
         sb.Clear();
         sb.Append(TagJs(response, "admin.js"));
         sb.Append(TagJs(response, "bootstrap.js"));
-        await response.WriteAsync(sb.ToString(), cancellationToken);
-
+       
         await End(request, response, cancellationToken);
     }
 

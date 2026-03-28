@@ -136,12 +136,12 @@ public sealed class PayTourView : View
 <script src='/js/service.js'></script>
 """);
 
-        await response.WriteAsync(sb.ToString(), cancellationToken);
+        //await response.WriteAsync(sb.ToString(), cancellationToken);
 
         sb.Clear();
         sb.Append(TagJs(response, "service.js"));
         sb.Append(TagJs(response, "bootstrap.js"));
-        await response.WriteAsync(sb.ToString(), cancellationToken);
+        //await response.WriteAsync(sb.ToString(), cancellationToken);
 
         await End(request, response, cancellationToken);
     }

@@ -136,7 +136,7 @@ public sealed class AboutAuthorsView : View
 ");
 
         // Отправляем HTML в response
-        await response.WriteAsync(sb.ToString(), cancellationToken);
+        // Отправляем HTML в responseawait response.WriteAsync(sb.ToString(), cancellationToken);
 
         // Вставка футера
         await End(request, response, cancellationToken);

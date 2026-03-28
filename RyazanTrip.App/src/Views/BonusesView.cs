@@ -146,13 +146,10 @@ public sealed class BonusesView : View
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 """);
 
-        await response.WriteAsync(sb.ToString(), cancellationToken);
 
         sb.Clear();
         sb.Append(TagJs(response, "bonuses.js"));
         sb.Append(TagJs(response, "bootstrap.js"));
-        await response.WriteAsync(sb.ToString(), cancellationToken);
-
         await End(request, response, cancellationToken);
     }
 
