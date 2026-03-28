@@ -21,15 +21,17 @@ public sealed class ImageModel {
       ImageEntity = imageEntity;
    }
    
-   public async Task<ImageModel> LoadFromRequestAsync(ImageRequest request, CancellationToken cancellationToken) {
+   public async Task<bool> UploadFromRequestAsync(ImageRequest request, CancellationToken cancellationToken) {
       var guid = CryptoUtils.ComputeSha256Hash(Guid.NewGuid().ToString());
-      var s3 = new S3Procedure(WebApp.);
+      using var s3 = new S3Procedure(RyazanTripApp.S3);
+      var result = await s3.UploadImageBytesAsync(Convert.FromBase64String(request.ImageBase64), guid, cancellationToken);
+      if (!result.Success) return false;
       var imageEntity = new ImageEntity {
-         Url = 
+         Url = result.Url
       };
       RyazanTripApp.Instance.Context.ImagesSet.Add(imageEntity);
-      await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
-      return new ImageModel(imageEntity);
+      var countChanges = await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
+      return countChanges > 0;
    }
 
    public async Task<ImageModel?> GetFromIdAsync(int id, CancellationToken cancellationToken) {

@@ -4,7 +4,7 @@ using RyazanTrip.App.Components;
 
 namespace RyazanTrip.App.Views;
 
-public sealed class MushroomQuestView : View
+public sealed class MushroomMapView : View
 {
     #region START_END
 

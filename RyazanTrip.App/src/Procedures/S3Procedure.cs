@@ -19,7 +19,7 @@ public record S3UploadResult
    }
 }
 
-public sealed class S3Procedure {
+public sealed class S3Procedure : IDisposable {
    private readonly IAmazonS3 _s3Client;
    private readonly TransferUtility _transferUtility;
    public string BucketName { get; set; } = string.Empty;
@@ -44,7 +44,7 @@ public sealed class S3Procedure {
             BucketName = BucketName,
             Key = objectKey,
             InputStream = stream,
-            ContentType = "image/webp",
+            ContentType = "image/*",
             CannedACL = S3CannedACL.PublicRead
          };
          await _s3Client.PutObjectAsync(request, cancellationToken);
@@ -76,4 +76,9 @@ public sealed class S3Procedure {
    }
    
    private string GetPublicUrl(string fileName) => $"https://afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/{fileName}";
+
+   public void Dispose() {
+      _s3Client.Dispose();
+      _transferUtility.Dispose();
+   }
 }

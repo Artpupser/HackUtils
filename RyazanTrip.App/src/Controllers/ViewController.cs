@@ -61,6 +61,12 @@ public sealed class ViewController : Controller {
    private async Task MushroomsPageHandler(Request request, Response response, CancellationToken cancellationToken) {
       await SendPage(new MushroomQuestView(), request, response, cancellationToken);
    }
+   
+   [ControllerHandler("/mushrooms_map", HttpMethodType.GET)]
+   private async Task MushroomsMapPageHandler(Request request, Response response, CancellationToken cancellationToken) {
+      await SendPage(new MushroomMapView(), request, response, cancellationToken);
+   }
+
 
    private static async Task SendPage(View view, Request request, Response response,
       CancellationToken cancellationToken) {

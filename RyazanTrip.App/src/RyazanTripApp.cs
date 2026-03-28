@@ -14,14 +14,14 @@ public sealed class RyazanTripApp : WebApp, IRyazanTripAppSecureContext {
    public YandexMicroService YandexMicroMicroService { get; }
    public RyazanTripDbContext Context { get; }
    public static IRyazanTripAppSecureContext Instance { get; private set; } = null!;
-   [ConfigurationKeyName("SelectelAccess")]
-   public static ushort Port { get; private set; } = 50001;
+   public static IConfigurationSection S3 { get; private set; } 
    public RyazanTripApp(IConfiguration configuration, IRouter router, ILogger<RyazanTripApp> logger,
       RyazanTripDbContext dbContext, YandexMicroService yandexMicroService) : base(
       configuration, router,
       logger) {
       if (Instance != null)
          throw new InvalidOperationException("TripApp provider has already been configured");
+      S3 = configuration.GetSection("Selectel");
       Context = dbContext;
       YandexMicroMicroService = yandexMicroService;
       Instance = this;
