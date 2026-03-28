@@ -35,8 +35,10 @@ public static class EntityExtensions {
       var session = user.Sessions.FirstOrDefault(s => s.Token == request.Session!.Id);
       WebApp.SecureContextInstance.Logger.LogInformation("Regeneration session, {SessionId}", request.Session!.Id);
       if (session == null) {
+         WebApp.SecureContextInstance.Logger.LogInformation("Session is null, {SessionId}", request.Session!.Id);
          session = user.Sessions.FirstOrDefault(s => s.UserId == user.Id);
          if (session == null) {
+            WebApp.SecureContextInstance.Logger.LogInformation("User session is null, {SessionId}", request.Session!.Id);
             return await user.CreateSession(request.Session!, cancellationToken);
          }
          session.Token = request.Session.Id;

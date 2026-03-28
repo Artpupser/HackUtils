@@ -22,14 +22,6 @@ public class YandexAuthorizationController : Controller {
          }
 
          var result = await RyazanTripApp.Instance.YandexMicroMicroService.ExchangeCodeAsync(code, cancellationToken);
-         // using var locationProcedure = new LocationProcedure(request);
-         // using var translateProcedure = new TranslateProcedure(request);
-         // var locationResponse = await locationProcedure.GetLocationAsync(cancellationToken);
-         // if (locationResponse != null) {
-            // town = await translateProcedure.Translate(locationResponse.City, "en", "ru", cancellationToken) ??
-                   // locationResponse.City;
-         // }
-
          var userEntity = new UserEntity {
             Email = result.Email,
             Username = result.Login,
@@ -56,7 +48,6 @@ public class YandexAuthorizationController : Controller {
          if (countSaved > 0) {
             WebApp.SecureContextInstance.Logger.LogWarning("Successfully saved!");
             var savedUser = RyazanTripApp.Instance.Context.UsersSet.FirstOrDefault(x => x.Email == result.Email);
-            WebApp.SecureContextInstance.Logger.LogWarning("Successfully saved!");
             if (savedUser != null && await savedUser.RegenerateSessions(request, cancellationToken)) {
                response.Redirect("/profile");
                await response.SendAsync(cancellationToken);

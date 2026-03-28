@@ -23,8 +23,10 @@ function showLoginForm() {
     }, 300);
 }
 
-const loginForm = document.getElementById("login-form");
-const registrationForm = document.getElementById("register-form");
+const loginFormView = document.getElementById("login-form");
+const registrationFormView = document.getElementById("register-form");
+const loginForm = loginFormView.getElementsByTagName("form")[0];
+const registrationForm = loginFormView.getElementsByTagName("form")[0];
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     try {
@@ -79,7 +81,7 @@ registrationForm.addEventListener("submit", async (e) => {
 // Yandex auth
 document.getElementById("yandex_submit").addEventListener("click", async (e) => {
     try {
-        const formData = new FormData(registrationForm);
+        const formData = new FormData(registrationFormView);
         const jsonData = Object.fromEntries(formData);
         const response = await fetch('/api/login-yandex', {
             method: "post",

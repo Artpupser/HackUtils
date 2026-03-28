@@ -67,17 +67,21 @@ public record RegistrationRequest() {
 public class AuthorizationController : Controller {
    [ControllerHandler("/api/login", HttpMethodType.POST)]
    private async Task LoginHandler(Request request, Response response, CancellationToken cancellationToken) {
-      var content = await request.ReadContentT<LoginRequest>(cancellationToken);
-      if (await ValidatorManager.Valid(request, response, content, cancellationToken)) {
-         WebApp.SecureContextInstance.Logger.LogInformation("Login handler invoked, {Email}", content.Email);
-         content.Password = CryptoUtils.ComputeSha256Hash(content.Password);
-         var user = await RyazanTripApp.Instance.Context.UsersSet.Include(userEntity => userEntity.Sessions).FirstOrDefaultAsync(x => x.Email == content.Email, cancellationToken);
-         if (user != null && user.PasswordHash == content.Password) {
-            var sessionResult = await user.RegenerateSessions(request, cancellationToken);
-            await  response.SendSuccess(sessionResult, cancellationToken);
-            return;
+      try {
+         var content = await request.ReadContentT<LoginRequest>(cancellationToken);
+         if (await ValidatorManager.Valid(request, response, content, cancellationToken)) {
+            WebApp.SecureContextInstance.Logger.LogInformation("Login handler invoked, {Email}", content.Email);
+            content.Password = CryptoUtils.ComputeSha256Hash(content.Password);
+            var user = await RyazanTripApp.Instance.Context.UsersSet.FirstOrDefaultAsync(x => x.Email == content.Email, cancellationToken);
+            if (user != null && user.PasswordHash == content.Password) {
+               var sessionResult = await user.RegenerateSessions(request, cancellationToken);
+               await response.SendSuccess(true, cancellationToken);
+               return;
+            }
+            response.ErrorStack.PushStack("Password or email not correct");
          }
-         response.ErrorStack.PushStack("Password or email not correct");
+      } catch (Exception e) {
+         WebApp.SecureContextInstance.Logger.LogError("Login handler invoked, {E}", e);
       }
    }
 

@@ -1610,12 +1610,12 @@ a.tour-btn-auth:hover {
   background-size: cover;
   background-position: center;
 }
-.slide:nth-child(1) { background-image: url('rzn_kremlin_tour.webp'); }
-.slide:nth-child(2) { background-image: url('cater_tour.webp'); }
-.slide:nth-child(3) { background-image: url('fish_village_tour.webp'); }
-.slide:nth-child(4) { background-image: url('pochtovaya_street_tour.webp'); }
-.slide:nth-child(5) { background-image: url('old_ryazan_tour.webp'); }
-.slide:nth-child(6) { background-image: url('old_town_hotel_tour.webp'); }
+.slide:nth-child(1) { background-image: url('afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/rzn_kremlin_tour.webp'); }
+.slide:nth-child(2) { background-image: url('afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/cater_tour.webp'); }
+.slide:nth-child(3) { background-image: url('afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/fish_village_tour.webp'); }
+.slide:nth-child(4) { background-image: url('afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/pochtovaya_street_tour.webp'); }
+.slide:nth-child(5) { background-image: url('afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/old_ryazan_tour.webp'); }
+.slide:nth-child(6) { background-image: url('afc5e8a7-ce80-4666-abe8-61a18f87a6b2.selstorage.ru/old_town_hotel_tour.webp'); }
 
 .btn_slide {
   border: none;
@@ -2459,7 +2459,6 @@ body:not(.tour-app) .btn-burger {
   .tour-tour-date-main { font-size: 24px; }
   .tour-tour-subtitle { font-size: 22px; }
 }
-<<<<<<< HEAD
 
 /* ============================================
    MAP PAGE (Карта квестов)
@@ -2546,6 +2545,335 @@ body:not(.tour-app) .btn-burger {
   font-size:16px;
   border-radius:20px;
   cursor:pointer;
-}  
-=======
->>>>>>> 0b404f7310ddb05ee1c06e195cb307b498ddd429
+}
+
+
+/* ============================================
+   CATALOG PAGE (Каталог туров)
+   ============================================ */
+
+.tour-catalog-page {
+    background-color: var(--tour-cream);
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: var(--tour-font);
+}
+
+.tour-catalog-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Заголовок "КАТАЛОГ ТУРА" */
+.tour-catalog-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tour-catalog-title {
+    display: inline-block;
+    background: linear-gradient(to right, #BC986A, #DAAD86);
+    color: var(--tour-cream);
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 15px 60px;
+    border-radius: 50px;
+    margin: 0;
+    box-shadow: 0 4px 15px rgba(188, 152, 106, 0.3);
+    font-family: var(--tour-font);
+}
+
+/* Список туров */
+.tour-catalog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Карточка тура */
+.tour-catalog-card {
+    background: rgba(251, 238, 193, 0.5);
+    border: 2px solid var(--tour-olive);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tour-catalog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(141, 135, 65, 0.15);
+}
+
+/* Шапка карточки (номер + название) */
+.tour-card-header {
+    margin-bottom: 15px;
+}
+
+.tour-card-number {
+    display: block;
+    color: var(--tour-olive);
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-bottom: 5px;
+    font-family: var(--tour-font);
+}
+
+.tour-card-name {
+    color: var(--tour-olive);
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.2;
+    font-family: var(--tour-font);
+}
+
+/* Тело карточки */
+.tour-card-body {
+    display: flex;
+    gap: 25px;
+    align-items: stretch;
+}
+
+/* Изображение тура */
+.tour-card-image {
+    flex: 0 0 300px;
+    height: 180px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid var(--tour-sand-dark);
+    background: var(--tour-cream-light);
+}
+
+.tour-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.tour-catalog-card:hover .tour-card-image img {
+    transform: scale(1.05);
+}
+
+/* Информация о туре */
+.tour-card-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.tour-info-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+}
+
+.tour-info-label {
+    color: var(--tour-olive);
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: var(--tour-font);
+    opacity: 0.9;
+}
+
+.tour-info-value {
+    color: var(--tour-olive);
+    font-size: 18px;
+    font-weight: 500;
+    font-family: var(--tour-font);
+}
+
+/* Кнопка "Узнать больше!" */
+.tour-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 150px;
+}
+
+.tour-btn-more {
+    background: transparent;
+    border: 2px solid var(--tour-olive);
+    border-radius: 50px;
+    padding: 12px 25px;
+    color: var(--tour-olive);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--tour-font);
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(141, 135, 65, 0.1);
+}
+
+.tour-btn-more:hover {
+    background: var(--tour-olive);
+    color: var(--tour-cream);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(141, 135, 65, 0.3);
+}
+
+/* Пустое состояние */
+.tour-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: var(--tour-olive);
+    opacity: 0.6;
+}
+
+.tour-empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.tour-empty-state p {
+    font-size: 20px;
+    font-family: var(--tour-font);
+}
+
+/* ============================================
+   CATALOG RESPONSIVE
+   ============================================ */
+
+@media (max-width: 992px) {
+    .tour-card-image {
+        flex: 0 0 250px;
+        height: 160px;
+    }
+
+    .tour-card-name {
+        font-size: 20px;
+    }
+
+    .tour-info-label,
+    .tour-info-value {
+        font-size: 16px;
+    }
+}
+@media (max-width: 768px) {
+    .tour-catalog-title {
+        font-size: 18px;
+        padding: 12px 40px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .tour-card-body {
+        flex-direction: column;
+    }
+
+    .tour-card-image {
+        flex: none;
+        width: 100%;
+        height: 200px;
+    }
+
+    .tour-card-actions {
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .tour-catalog-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .tour-catalog-page {
+        padding: 20px 15px;
+    }
+
+    .tour-card-name {
+        font-size: 18px;
+    }
+
+    .tour-info-label,
+    .tour-info-value {
+        font-size: 14px;
+    }
+
+    .tour-btn-more {
+        width: 100%;
+        text-align: center;
+    }
+
+    .tour-card-image {
+        height: 160px;
+    }
+}
+
+/* ============================================
+   ADMIN PANEL - FILE BUTTON FIX
+   ============================================ */
+
+.tour-file-button-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Скрытый input file */
+.tour-file-input-hidden {
+    display: none;
+}
+
+/* Кнопка выбора файла (коричневая как на скриншоте) */
+.tour-btn-file {
+    width: 80px;
+    height: 45px;
+    background: linear-gradient(180deg, #BC986A 0%, #DAAD86 100%);
+    border: 2px solid var(--tour-olive);
+    border-radius: 25px;
+    color: var(--tour-cream);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tour-btn-file:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(188, 152, 106, 0.4);
+}
+
+.tour-btn-file:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Имя выбранного файла */
+.tour-file-name {
+    color: var(--tour-olive);
+    font-size: 14px;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+    .tour-file-button-wrapper {
+        width: 100%;
+    }
+
+    .tour-btn-file {
+        width: 60px;
+        height: 40px;
+    }
+}

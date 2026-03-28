@@ -32,5 +32,10 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity> {
          .WithMany(x => x.Users)
          .HasForeignKey(x => x.LevelId)
          .OnDelete(DeleteBehavior.Restrict);
+      
+      
+      builder.HasData(
+            [ new UserEntity { Id = 1, Username = "artpupser", Email = "artpupser@ya.ru", LevelId = 1, RoleId = 2,Town = "Рязань", PasswordHash = CryptoUtils.ComputeSha256Hash("12345"), Experience = 0},]
+         );
    }
 }

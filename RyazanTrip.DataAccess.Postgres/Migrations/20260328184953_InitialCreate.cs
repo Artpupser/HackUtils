@@ -141,6 +141,7 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                     Email = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: false),
                     PasswordHash = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Username = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    Town = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Experience = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -314,6 +315,11 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                     { 1, "User" },
                     { 2, "Admin" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "Id", "Email", "Experience", "LevelId", "PasswordHash", "RoleId", "Town", "Username" },
+                values: new object[] { 1, "artpupser@ya.ru", 0, 1, "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5", 2, "Рязань", "artpupser" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_mushroom_submissions_ImageId",

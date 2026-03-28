@@ -38,12 +38,12 @@ public sealed class AuthorizationView : View {
                                <form>
                                    <div class="tour-input-wrapper">
                                        <span class="tour-input-icon"><i class="bi bi-person-fill"></i></span>
-                                       <input type="email" class="tour-form-control" placeholder="почта" required>
+                                       <input name="email" type="email" class="tour-form-control" placeholder="почта" required>
                                    </div>
                 
                                    <div class="tour-input-wrapper">
                                        <span class="tour-input-icon"><i class="bi bi-lock-fill"></i></span>
-                                       <input type="password" class="tour-form-control" placeholder="пароль" required>
+                                       <input name="password" type="password" class="tour-form-control" placeholder="пароль" required>
                                    </div>
                 
                                    <button type="submit" class="tour-btn-auth">войти</button>
@@ -65,15 +65,15 @@ public sealed class AuthorizationView : View {
                     <form>
                         <div class="tour-input-wrapper">
                             <span class="tour-input-icon"><i class="bi bi-person-fill"></i></span>
-                            <input type="text" class="tour-form-control" placeholder="имя" required>
+                            <input name="username" type="text" class="tour-form-control" placeholder="имя" required>
                         </div>
                 
                         <div class="tour-input-wrapper">
-                            <input type="email" class="tour-form-control" placeholder="email" required>
+                            <input name="email" type="email" class="tour-form-control" placeholder="email" required>
                         </div>
                 
                         <div class="tour-input-wrapper">
-                            <select class="tour-form-control" required>
+                            <select name="town" class="tour-form-control" required>
                                 <option value="" disabled selected>Из какого вы города?</option>
                                 <option value="moscow">Москва</option>
                                 <option value="spb">Санкт-Петербург</option>
@@ -85,11 +85,11 @@ public sealed class AuthorizationView : View {
                 
                         <div class="tour-input-wrapper">
                             <span class="tour-input-icon"><i class="bi bi-lock-fill"></i></span>
-                            <input type="password" class="tour-form-control" placeholder="пароль" required>
+                            <input name="password" type="password" class="tour-form-control" placeholder="пароль" required>
                         </div>
                 
                         <div class="tour-input-wrapper">
-                            <input type="password" class="tour-form-control" placeholder="повторите пароль" required>
+                            <input name="password_repeat" type="password" class="tour-form-control" placeholder="повторите пароль" required>
                         </div>
                 
                         <button type="submit" class="tour-btn-auth">зарегистрироваться</button>

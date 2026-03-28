@@ -378,7 +378,8 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
 
                     b.Property<string>("Town")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -392,6 +393,19 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "artpupser@ya.ru",
+                            Experience = 0,
+                            LevelId = 1,
+                            PasswordHash = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+                            RoleId = 2,
+                            Town = "Рязань",
+                            Username = "artpupser"
+                        });
                 });
 
             modelBuilder.Entity("RyazanTrip.DataAccess.Postgres.Entities.UserTourEntity", b =>
