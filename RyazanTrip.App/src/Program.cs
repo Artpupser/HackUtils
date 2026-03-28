@@ -30,6 +30,7 @@ public static class Program {
       var host = builder.Build();
       const byte attemptsToConnect = 10;
       for (var i = 0; i < attemptsToConnect; i++) {
+         
          using var scope = host.Services.CreateScope();
          var logger = scope.ServiceProvider.GetRequiredService<ILogger<PupaMVCF.Framework.Core.WebApp>>();
          try {

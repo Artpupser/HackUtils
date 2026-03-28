@@ -19,6 +19,7 @@ public sealed class ViewController : Controller {
    [ControllerHandler("/authorization", HttpMethodType.GET)]
    private async Task
       AuthorizationPageHandler(Request request, Response response, CancellationToken cancellationToken) {
+      request.Session?.Set("test", [0]);
       await SendPage(new AuthorizationView(), request, response, cancellationToken);
    }
 
@@ -33,11 +34,11 @@ public sealed class ViewController : Controller {
       await response.SendAsync(cancellationToken);
    }
 
-   [ControllerHandler("/account", HttpMethodType.GET)]
-   private async Task AccountPageHandler(Request request, Response response, CancellationToken cancellationToken) {
+   [ControllerHandler("/profile", HttpMethodType.GET)]
+   private async Task ProfilePageHandler(Request request, Response response, CancellationToken cancellationToken) {
       var userModel = await UserModel.LoadUserFromRequest(request.Session!, cancellationToken);
       if (userModel != null && userModel.Check()) {
-         await SendPage(new AccountView(), request, response, cancellationToken);
+         await SendPage(new ProfileView(), request, response, cancellationToken);
          return;
       }
       response.Redirect("/authorization");
@@ -46,6 +47,7 @@ public sealed class ViewController : Controller {
 
    [ControllerHandler("/about_us", HttpMethodType.GET)]
    private async Task AboutUsPageHandler(Request request, Response response, CancellationToken cancellationToken) {
+      
       await SendPage(new AboutUsView(), request, response, cancellationToken);
    }
 

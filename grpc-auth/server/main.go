@@ -38,10 +38,8 @@ type YandexUser struct {
 func startHTTPCallbackServer() {
 	http.HandleFunc("/yandex/callback", func(w http.ResponseWriter, r *http.Request) {
 		code := r.URL.Query().Get("code")
-
 		fmt.Println("🔥 YANDEX RETURNED CODE:")
 		fmt.Println(code)
-
 		fmt.Fprintf(w, "Login success! Return to console.")
 	})
 

@@ -23,6 +23,85 @@ function showLoginForm() {
     }, 300);
 }
 
+const loginForm = document.getElementById("login_form");
+const registrationForm = document.getElementById("registration_form");
+loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+        const formData = new FormData(loginForm);
+        const jsonData = Object.fromEntries(formData);
+        const response = await fetch('/api/login', {
+            method: "post",
+            credentials: "include",
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify(jsonData)
+        })
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`)
+        const result = await response.json();
+        if (result["success"] === true) {
+            document.location = '/profile'
+        } else {
+            alert('Ответ пришел отрицательным, ошибка в верефикации');
+        }
+    }  catch (e) {
+        console.error('Ошибка: ', e)
+    }
+})
+
+registrationForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+        const formData = new FormData(registrationForm);
+        const jsonData = Object.fromEntries(formData);
+        const response = await fetch('/api/registration', {
+            method: "post",
+            credentials: "include",
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify(jsonData)
+        })
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`)
+        const result = await response.json();
+        if (result["success"] === true) {
+            document.location = '/profile'
+        } else {
+            alert('Ответ пришел отрицательным, ошибка в верефикации');
+        }
+    }
+    catch (e) {
+        console.error('Ошибка: ', e)
+    }
+})
+    
+// Yandex auth
+document.getElementById("yandex_submit").addEventListener("click", async (e) => {
+    try {
+        const formData = new FormData(registrationForm);
+        const jsonData = Object.fromEntries(formData);
+        const response = await fetch('/api/login-yandex', {
+            method: "post",
+            credentials: "include",
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify(jsonData)
+        })
+        if (!response.ok) throw new Error(`Ошибка: ${response.status}`)
+        const result = await response.json();
+        if (result["success"] === true) {
+            document.location = '/profile'
+        } else {
+            alert('Ответ пришел отрицательным, ошибка в верефикации');
+        }
+    }
+    catch (e) {
+        console.error('Ошибка: ', e)
+    }
+})
+
 document.getElementById("show_button_register").addEventListener('click', (x) => {
     showRegisterForm();
 })

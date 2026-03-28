@@ -32,15 +32,15 @@ public sealed class AuthorizationView : View {
                                    <h1 class="auth-title">ВХОД</h1>
                                    <button id="show_button_register" type="button" class="btn-toggle">регистрация</button>
                                </div>
-                               <form>
+                               <form id='login_form'>
                                    <div class="input-wrapper">
                                        <span class="input-icon"><i class="bi bi-person-fill"></i></span>
-                                       <input type="email" class="form-control-auth" placeholder="почта" required>
+                                       <input name='email' id='email' type="email" class="form-control-auth" placeholder="почта" required>
                                    </div>
 
                                    <div class="input-wrapper">
                                        <span class="input-icon"><i class="bi bi-lock-fill"></i></span>
-                                       <input type="password" class="form-control-auth" placeholder="пароль" required>
+                                       <input name='password' type="password" class="form-control-auth" placeholder="пароль" required>
                                    </div>
                                    <button type="submit" class="btn-auth">войти</button>
                                    <div class="auth-options">
@@ -58,16 +58,16 @@ public sealed class AuthorizationView : View {
                                    <button id='show_button_login' type="button" class="btn-toggle">вход</button>
                                </div>
 
-                               <form>
+                               <form id='registration_form'>
                                    <div class="input-wrapper">
                                        <span class="input-icon"><i class="bi bi-person-fill"></i></span>
-                                       <input type="text" class="form-control-auth" placeholder="имя" required>
+                                       <input name='username' type="text" class="form-control-auth" placeholder="имя" required>
                                    </div>
                                    <div class="input-wrapper">
-                                       <input type="email" class="form-control-auth" placeholder="email" required>
+                                       <input name='email' type="email" class="form-control-auth" placeholder="email" required>
                                    </div>
                                    <div class="input-wrapper">
-                                       <select class="form-control-auth" required>
+                                       <select name='town' class="form-control-auth" required>
                                            <option value="" disabled selected>Из какого вы города?</option>
                                            <option value="moscow">Москва</option>
                                            <option value="spb">Санкт-Петербург</option>
@@ -78,13 +78,13 @@ public sealed class AuthorizationView : View {
                                    </div>
                                    <div class="input-wrapper">
                                        <span class="input-icon"><i class="bi bi-lock-fill"></i></span>
-                                       <input type="password" class="form-control-auth" placeholder="пароль" required>
+                                       <input name='password' type="password" class="form-control-auth" placeholder="пароль" required>
                                    </div>
                                    <div class="input-wrapper">
-                                       <input type="password" class="form-control-auth" placeholder="повторите пароль" required>
+                                       <input name='password_repeat' type="password" class="form-control-auth" placeholder="повторите пароль" required>
                                    </div>
                                    <button type="submit" class="btn-auth">зарегистрироваться</button>
-                                   <button type="button" class="btn-auth">Зарегистрироваться с помощью яндекс</button>
+                                   <button id='yandex_submit' type="button" class="btn-auth">Зарегистрироваться с помощью яндекс</button>
                                </form>
                            </div>
 

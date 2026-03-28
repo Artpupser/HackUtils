@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 using PupaMVCF.Framework.Controllers;
 using PupaMVCF.Framework.Core;
 using PupaMVCF.Framework.Validations;
 
+using RyazanTrip.App.Extensions;
 using RyazanTrip.App.Models;
 using RyazanTrip.DataAccess.Postgres.Entities;
 
@@ -18,7 +18,8 @@ public record LoginRequest() {
    [ValidRule(ValidRuleType.Need)]
    [ValidRule(ValidRuleType.MinLength, 3)]
    [ValidRule(ValidRuleType.MaxLength, 24)]
-   [JsonPropertyName("username")]
+   [ValidRule(ValidRuleType.Email)]
+   [JsonPropertyName("email")]
    public string Email { get; set; } = string.Empty;
 
    [ValidRule(ValidRuleType.Need)]
@@ -72,8 +73,8 @@ public class AuthorizationController : Controller {
          content.Password = CryptoUtils.ComputeSha256Hash(content.Password);
          var user = await RyazanTripApp.Instance.Context.UsersSet.Include(userEntity => userEntity.Sessions).FirstOrDefaultAsync(x => x.Email == content.Email, cancellationToken);
          if (user != null && user.PasswordHash == content.Password) {
-            await RegenerateSessions(user, request, cancellationToken);
-            await SendSuccess(true, response,cancellationToken);
+            var sessionResult = await RegenerateSessions(user, request, cancellationToken);
+            await SendSuccess(sessionResult, response, cancellationToken);
             return;
          }
          response.ErrorStack.PushStack("Password or email not correct");
@@ -96,14 +97,10 @@ public class AuthorizationController : Controller {
                RoleId = 1,
                Experience = 0,
             };
-            WebApp.SecureContextInstance.Logger.LogInformation("Registration handler invoked, {Email}, {LevelId} {RoleId}", user.Email, user.LevelId, user.RoleId);
             if (await user.CheckAnyUser(cancellationToken)) {
                response.ErrorStack.PushStack($"User with {user.Email}  already created");
                return;
             }
-            
-            WebApp.SecureContextInstance.Logger.LogInformation("New user!, {Email}", content.Email);
-
             await RyazanTripApp.Instance.Context.UsersSet.AddAsync(user, cancellationToken);
             var countSaved = await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
             WebApp.SecureContextInstance.Logger.LogInformation("Saved!, {Email}", content.Email);
@@ -114,17 +111,20 @@ public class AuthorizationController : Controller {
                   .FirstOrDefaultAsync(x => x.Email == content.Email, cancellationToken);
                
                if (savedUser != null && await RegenerateSessions(savedUser, request, cancellationToken)) {
-                  WebApp.SecureContextInstance.Logger.LogInformation("Success!, {Email}", content.Email);
                   await SendSuccess(true, response, cancellationToken);
                   return;
                }
             }
-
             response.ErrorStack.PushStack("Error user creation");
          }
 
          response.ErrorStack.PushStack("Passwords not equals");
       }
+   }
+
+   [ControllerHandler("/api/login-yandex", HttpMethodType.POST)]
+   private async Task LoginYandexHandler(Request request, Response response, CancellationToken cancellationToken) {
+      await Task.CompletedTask;
    }
 
    [ControllerHandler("/api/logout", HttpMethodType.POST)]
@@ -146,9 +146,9 @@ public class AuthorizationController : Controller {
             } else {
                response.ErrorStack.PushStack("Session not found");
             }
-         } else {
-            response.ErrorStack.PushStack("Email or password not correct");
-         }
+            return;  
+         } 
+         response.ErrorStack.PushStack("Email or password not correct");
       }
    }
 
@@ -156,8 +156,12 @@ public class AuthorizationController : Controller {
       var session = user.Sessions.FirstOrDefault(s => s.Token == request.Session!.Id);
       WebApp.SecureContextInstance.Logger.LogInformation("Regeneration session, {SessionId}", request.Session!.Id);
       if (session == null) {
-         await user.CreateSession(request.Session!, cancellationToken);
-         return true;
+         session = user.Sessions.FirstOrDefault(s => s.UserId == user.Id);
+         if (session == null) {
+            return await user.CreateSession(request.Session!, cancellationToken);
+         }
+         session.Token = request.Session.Id;
+         return await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken) > 0;
       }
       session.ExpiresAt = DateTime.UtcNow.AddDays(1);
       return await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken) > 0;
@@ -169,30 +173,5 @@ public class AuthorizationController : Controller {
       };
       response.WriteTJsonToCache(successResponse);
       await response.SendAsync(cancellationToken);
-   }
-}
-
-public static class EntityExtensions {
-   public static async Task<bool> CreateSession(this UserEntity userEntity, ISession session,
-      CancellationToken cancellationToken) {
-      var sessionEntity = new SessionEntity {
-         UserId = userEntity.Id,
-         Token = session.Id,
-         CreatedAt = DateTime.UtcNow,
-         ExpiresAt = DateTime.UtcNow.AddDays(1)
-      };
-      await RyazanTripApp.Instance.Context.SessionsSet.AddAsync(sessionEntity, cancellationToken);
-      var countSaved = await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
-      return countSaved > 0 && await sessionEntity.CheckAnySession(cancellationToken);
-   }
-
-   public static async Task<bool> CheckAnyUser(this UserEntity entity, CancellationToken cancellationToken) {
-      return await RyazanTripApp.Instance.Context.UsersSet.AnyAsync(x => x.Email == entity.Email,
-         cancellationToken);
-   }
-
-   public static async Task<bool> CheckAnySession(this SessionEntity entity, CancellationToken cancellationToken) {
-      return await RyazanTripApp.Instance.Context.SessionsSet.AnyAsync(x => x.Token == entity.Token,
-         cancellationToken);
    }
 }
