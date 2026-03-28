@@ -212,7 +212,7 @@ public sealed class MushroomQuestView : View
 
 <script>
     document.getElementById(""startMushroomQuestBtn"").onclick = function(){
-        window.location.href = ""/map""; 
+        window.location.href = ""MushroomMapView""; 
     };
 </script>
 
