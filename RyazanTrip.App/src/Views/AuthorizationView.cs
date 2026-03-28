@@ -1,4 +1,6 @@
-﻿using PupaMVCF.Framework.Core;
+﻿using Grpc.Core;
+
+using PupaMVCF.Framework.Core;
 using PupaMVCF.Framework.Views;
 
 using RyazanTrip.App.Components;
@@ -84,13 +86,13 @@ public sealed class AuthorizationView : View {
                                        <input name='password_repeat' type="password" class="form-control-auth" placeholder="повторите пароль" required>
                                    </div>
                                    <button type="submit" class="btn-auth">зарегистрироваться</button>
-                                   <button id='yandex_submit' type="button" class="btn-auth">Зарегистрироваться с помощью яндекс</button>
-                               </form>
-                           </div>
-
-                       </div>
-                   </div>
+                                  
                 """);
+      await RyazanTripApp.Instance.YandexMicroMicroService.Connect(cancellationToken);
+      var url = await RyazanTripApp.Instance.YandexMicroMicroService.GetAuthUrlAsync(cancellationToken);
+      sb.Append(
+         $"<a href='{url}' id='yandex_submit' type='button' class='btn-auth'>Зарегистрироваться с помощью яндекс</a>");
+      sb.Append("</form></div> </div></div>");
       sb.Append(TagJs(response,"authorization.js"));
       await End(request, response, cancellationToken);
    }

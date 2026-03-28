@@ -73,8 +73,8 @@ public class AuthorizationController : Controller {
          content.Password = CryptoUtils.ComputeSha256Hash(content.Password);
          var user = await RyazanTripApp.Instance.Context.UsersSet.Include(userEntity => userEntity.Sessions).FirstOrDefaultAsync(x => x.Email == content.Email, cancellationToken);
          if (user != null && user.PasswordHash == content.Password) {
-            var sessionResult = await RegenerateSessions(user, request, cancellationToken);
-            await SendSuccess(sessionResult, response, cancellationToken);
+            var sessionResult = await user.RegenerateSessions(request, cancellationToken);
+            await  response.SendSuccess(sessionResult, cancellationToken);
             return;
          }
          response.ErrorStack.PushStack("Password or email not correct");
@@ -85,7 +85,6 @@ public class AuthorizationController : Controller {
    private async Task RegistrationHandler(Request request, Response response, CancellationToken cancellationToken) {
       var content = await request.ReadContentT<RegistrationRequest>(cancellationToken);
       if (await ValidatorManager.Valid(request, response, content, cancellationToken)) {
-         WebApp.SecureContextInstance.Logger.LogInformation("Registration handler invoked, {Email}", content.Email);
          if (content.Password == content.PasswordRepeat) {
             content.Password = CryptoUtils.ComputeSha256Hash(content.Password);
             var user = new UserEntity {
@@ -110,8 +109,8 @@ public class AuthorizationController : Controller {
                   .Include(u => u.Sessions)
                   .FirstOrDefaultAsync(x => x.Email == content.Email, cancellationToken);
                
-               if (savedUser != null && await RegenerateSessions(savedUser, request, cancellationToken)) {
-                  await SendSuccess(true, response, cancellationToken);
+               if (savedUser != null && await savedUser.RegenerateSessions(request, cancellationToken)) {
+                  await response.SendSuccess(true, cancellationToken);
                   return;
                }
             }
@@ -121,11 +120,8 @@ public class AuthorizationController : Controller {
          response.ErrorStack.PushStack("Passwords not equals");
       }
    }
+   
 
-   [ControllerHandler("/api/login-yandex", HttpMethodType.POST)]
-   private async Task LoginYandexHandler(Request request, Response response, CancellationToken cancellationToken) {
-      await Task.CompletedTask;
-   }
 
    [ControllerHandler("/api/logout", HttpMethodType.POST)]
    private async Task LogoutHandler(Request request, Response response, CancellationToken cancellationToken) {
@@ -139,7 +135,7 @@ public class AuthorizationController : Controller {
                RyazanTripApp.Instance.Context.SessionsSet.Remove(session);
                var countSaved = await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
                if (countSaved > 0) {
-                  await SendSuccess(true, response, cancellationToken);
+                  await response.SendSuccess(true, cancellationToken);
                   return;
                }
                response.ErrorStack.PushStack("Error session remove");
@@ -150,28 +146,5 @@ public class AuthorizationController : Controller {
          } 
          response.ErrorStack.PushStack("Email or password not correct");
       }
-   }
-
-   private async Task<bool> RegenerateSessions(UserEntity user, Request request, CancellationToken cancellationToken) {
-      var session = user.Sessions.FirstOrDefault(s => s.Token == request.Session!.Id);
-      WebApp.SecureContextInstance.Logger.LogInformation("Regeneration session, {SessionId}", request.Session!.Id);
-      if (session == null) {
-         session = user.Sessions.FirstOrDefault(s => s.UserId == user.Id);
-         if (session == null) {
-            return await user.CreateSession(request.Session!, cancellationToken);
-         }
-         session.Token = request.Session.Id;
-         return await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken) > 0;
-      }
-      session.ExpiresAt = DateTime.UtcNow.AddDays(1);
-      return await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken) > 0;
-   }
-   
-   private async Task SendSuccess(bool success, Response response, CancellationToken cancellationToken) {
-      var successResponse = new SuccessResponse {
-         Success = success
-      };
-      response.WriteTJsonToCache(successResponse);
-      await response.SendAsync(cancellationToken);
    }
 }

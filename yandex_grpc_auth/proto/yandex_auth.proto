@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = "/proto;proto";
+option go_package = "yandex_grpc_auth/proto;proto";
 
 service YandexAuthService {
   rpc GetYandexAuthURL (Empty) returns (YandexAuthURLResponse);
@@ -10,18 +10,18 @@ service YandexAuthService {
 }
 
 message Empty {
-
+  
 }
 
 message YandexAuthURLResponse {
-  string Url = 1;
+  string Url = 1; 
 }
 message YandexCodeRequest {
   string Code = 1;
-}
+ }
 message YandexUserResponse {
-  string Id = 1;
-  string Login = 2;
-  string Email = 3;
-
+   string Id = 1; 
+   string Login = 2; 
+   string Email = 3;
+ 
 }

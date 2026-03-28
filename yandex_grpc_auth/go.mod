@@ -1,4 +1,4 @@
-module grpc-auth
+module yandex_grpc_auth
 
 go 1.26.1
 

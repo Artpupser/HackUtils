@@ -6,6 +6,7 @@ using PupaMVCF.Framework.Routing;
 
 using RyazanTrip.App.Controllers;
 using RyazanTrip.App.Middleware;
+using RyazanTrip.App.Services;
 using RyazanTrip.DataAccess.Postgres;
 
 namespace RyazanTrip.App;
@@ -26,6 +27,7 @@ public static class Program {
          ]);
          return new Router(routerMapBuilder);
       });
+      builder.Services.AddSingleton<YandexMicroService>();
       builder.Services.AddHostedService<RyazanTripApp>();
       var host = builder.Build();
       const byte attemptsToConnect = 10;
@@ -42,7 +44,6 @@ public static class Program {
             logger.LogInformation("Restart...");
          }
       }
-
       await host.RunAsync();
    }
 }

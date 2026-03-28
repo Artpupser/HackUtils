@@ -1,0 +1,58 @@
+﻿using System.Data.Entity;
+using System.Security.Policy;
+
+using PupaMVCF.Framework.Controllers;
+using PupaMVCF.Framework.Core;
+
+using RyazanTrip.App.Extensions;
+using RyazanTrip.App.Models;
+using RyazanTrip.App.Procedures;
+using RyazanTrip.App.Services;
+using RyazanTrip.DataAccess.Postgres.Entities;
+
+namespace RyazanTrip.App.Controllers;
+
+public class YandexAuthorization {
+   [ControllerHandler("/api/yandex/callback", HttpMethodType.POST)]
+   private async Task YandexCallbackHandler(Request request, Response response, CancellationToken cancellationToken) {
+      var code = request.GetQueryValue("code");
+      if (code == string.Empty) {
+         response.ErrorStack.PushStack("Code is empty");
+      }
+      var result = await RyazanTripApp.Instance.YandexMicroMicroService.ExchangeCodeAsync(code, cancellationToken);
+      using var locationProcedure = new LocationProcedure(request);
+      using var translateProcedure = new TranslateProcedure(request);
+      var locationResponse = await locationProcedure.GetLocationAsync(cancellationToken);
+      var town = "Рязань";
+      if (locationResponse != null) {
+         town = await translateProcedure.Translate(locationResponse.City, "en", "ru", cancellationToken) ??
+            locationResponse.City;
+      }
+      var userEntity = new UserEntity {
+         Email = result.Email,
+         Username = result.Login,
+         Town = town,
+         PasswordHash = CryptoUtils.ComputeSha256Hash(Guid.NewGuid().ToString()),
+         LevelId = 1,
+         RoleId = 1,
+         Experience = 0,
+      };
+      if (await userEntity.CheckAnyUser(cancellationToken)) {
+         response.ErrorStack.PushStack($"User with {userEntity.Email}  already created");
+         return;
+      }
+      await RyazanTripApp.Instance.Context.UsersSet.AddAsync(userEntity, cancellationToken);
+      var countSaved = await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
+            
+      if (countSaved > 0) {
+         var savedUser = await RyazanTripApp.Instance.Context.UsersSet
+            .Include(u => u.Sessions)
+            .FirstOrDefaultAsync(x => x.Email == result.Email, cancellationToken);
+               
+         if (savedUser != null && await savedUser.RegenerateSessions(request, cancellationToken)) {
+            response.Redirect("/profile");
+            await response.SendAsync(cancellationToken);
+         }
+      }
+   }
+}

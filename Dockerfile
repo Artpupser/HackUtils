@@ -2,6 +2,7 @@
 WORKDIR /app
 COPY . ./
 RUN dotnet restore
+RUN dotnet build
 WORKDIR /app/RyazanTrip.App
 RUN dotnet publish -c Release -o /app/out
 

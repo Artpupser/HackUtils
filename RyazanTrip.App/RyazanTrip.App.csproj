@@ -11,12 +11,21 @@
         <Description>RyazanTrip web site</Description>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.34.1" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.78.0">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="PupaMVCF.Framework" Version="0.1.*" />
         <ProjectReference Include="..\RyazanTrip.DataAccess.Postgres\RyazanTrip.DataAccess.Postgres.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Protobuf Include="..\Protos\yandex_auth.proto" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
         <FilesProject Include="$(ProjectDir)/environment/**/*" />

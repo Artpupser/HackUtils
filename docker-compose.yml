@@ -12,6 +12,15 @@ services:
       - "5432:5432"
     networks:
       - net
+
+  yandex_auth:
+    container_name: "yandex_auth"
+    ports:
+      - "5433:5433"
+    build:
+      context: ./yandex_grpc_auth
+    networks:
+      - net
   
   nginx:
     image: nginx:stable-alpine
