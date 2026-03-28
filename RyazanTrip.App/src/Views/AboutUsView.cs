@@ -22,30 +22,23 @@ public sealed class AboutUsView : View {
    #endregion
 
    public override async Task Html(Request request, Response response, CancellationToken cancellationToken) {
-      await Start(request, response,"body_about_us", cancellationToken);
+      await Start(request, response,"about-page", cancellationToken);
       var sb = Builder;
       sb.Append($"""
-                 <div class='container' id='aboutus'> 
-                     <section class="section_about_us">
-                        <h1 class="h1_about_us">О нашем стартапе:</h1>
-                        Ryazan Trip родился из любви к городу и <br>
-                        желания показать его таким, каким мы сами <br>
-                        его ценим — живым, искренним, непарадным. <br>
-                        <br>
-                        Мы не работаем по сценарию. Каждая прогулка <br>
-                        — это диалог, где гостю одинаково интересны и <br>
-                        история улиц, и случайная встреча, и <br>
-                        неожиданный вид с неочевидной точки. <br>
-                        <br>
-                        Нам важно, чтобы вы не просто узнали факты, <br>
-                        а почувствовали ритм Рязани, нашли в ней <br>
-                        что-то своё и, возможно, захотели вернуться. <br>
-                        <br>
-                        Никакой суеты. Только вы, город и те, кто знает <br>
-                        его лучше всего.
-                     </section>
-                     <img src="/api/public/files?name=bg_for_abo.webp" alt="image" class="bg_for_abo">
+                 <div class="about-section">
+                   <h1 class="about-title">О нашем стартапе:</h1>
+                   <div class="about-text">
+                     Ryazan Trip родился из любви к городу и желания показать его таким, каким мы сами<br>
+                     его ценим — живым, искренним, непарадным.<br><br>
+                     Мы не работаем по сценарию. Каждая прогулка — это диалог, где гостю одинаково интересны и<br>
+                     история улиц, и случайная встреча, и неожиданный вид с неочевидной точки.<br><br>
+                     Нам важно, чтобы вы не просто узнали факты, а почувствовали ритм Рязани, нашли в ней<br>
+                     что-то своё и, возможно, захотели вернуться.<br><br>
+                     Никакой суеты. Только вы, город и те, кто знает его лучше всего.
+                   </div>
+                   <img src="imgs/backgrounds/bg_for_abo.webp" alt="Рязань" class="about-img">
                  </div>
+                 
                  """);
       await End(request, response, cancellationToken);
    }

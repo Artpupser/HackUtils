@@ -23,7 +23,7 @@ public sealed class ProfileView : View {
    #endregion
 
    public override async Task Html(Request request, Response response, CancellationToken cancellationToken) {
-      await Start(request, response, string.Empty, cancellationToken);
+      await Start(request, response, "tour-app", cancellationToken);
 
       try
       {
@@ -49,96 +49,98 @@ public sealed class ProfileView : View {
 
          var town = userModel.UserEntity.Town ?? "Рязань";
          
-         sb.Append($$"""
-                     <div class="profile-header">
-                     <div class="location-badge">
-                     <i class="bi bi-geo-alt-fill"></i>
-                     <span>{{town}}</span>
-                     </div>
+          sb.Append($$"""
+          <div class="tour-profile-header">
+              <div class="tour-location-badge">
+                  <i class="bi bi-geo-alt-fill"></i>
+                  <span>{{town}}</span>
+              </div>
 
-                     <div class="user-info">
-                     <div class="user-avatar">
-                     <i class="bi bi-person-fill"></i>
-                     </div>
+              <div class="tour-user-info">
+                  <div class="tour-user-avatar">
+                      <i class="bi bi-person-fill"></i>
+                  </div>
+                  
+                  <div class="tour-user-details">
+                      <h1 class="tour-user-name">{{userModel.UserEntity.Username}}</h1>
+                      
+                      <div class="tour-stats-row">
+                          <div class="tour-stat-badge level">
+                              <span>Уровень:</span>
+                              <span class="tour-level-number">{{userModel.UserEntity.LevelEntity?.Name ?? "Неизвестно"}}</span>
+                          </div>
+                          
+                          <div class="tour-stat-badge awards">
+                              <span>Мои Награды</span>
+                          </div>
+                      </div>
+                      
+                      <div class="tour-xp-info">
+                          <span>До следующего уровня:</span>
+                          <span class="tour-xp-needed">{{nextLevelXp}} опыта</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-                     <div class="user-details">
-                     <h1 class="user-name">{{userModel.UserEntity.Username}}</h1>
+       <!-- ОСНОВНОЙ КОНТЕНТ -->
+       <div class="tour-profile-content">
+           <div class="tour-content-grid">
+               
+               <div class="tour-menu-section">
+                   
+                   <button class="tour-menu-item">
+                       <div class="tour-menu-header">
+                           <span class="tour-menu-title">Личные Данные:</span>
+                           <i class="bi bi-chevron-double-right tour-menu-arrow"></i>
+                       </div>
+                   </button>
 
-                     <div class="stats-row">
-                     <div class="stat-badge level">
-                         <span>Уровень:</span>
-                         <span class="level-number">{{userModel.UserEntity.LevelEntity?.Name ?? "Неизвестно"}}</span>
-                     </div>
-
-                     <div class="stat-badge awards">
-                         <span>Мои Награды</span>
-                     </div>
-                     </div>
-
-                     <div class="xp-info">
-                     <span>До следующего уровня:</span>
-                     <span class="xp-needed">{{nextLevelXp}} опыта</span>
-                     </div>
-                     </div>
-                     </div>
-                     </div>
-
-                     <div class="profile-content">
-                     <div class="content-grid">
-
-                     <div class="menu-section">
-
-                     <button class="menu-item">
-                     <div class="menu-header">
-                         <span class="menu-title">Личные Данные:</span>
-                         <i class="bi bi-chevron-double-right menu-arrow"></i>
-                     </div>
-                     </button>
-
-                     <button class="menu-item">
-                     <div class="menu-header">
-                         <span class="menu-title">Мои Туры:</span>
-                         <i class="bi bi-chevron-double-right menu-arrow"></i></div> 
-                     """);
-
-         if (userModel.UserEntity.UserTours.Any()) {
-            foreach (var userTour in userModel.UserEntity.UserTours) {
-               var imageUrl = userTour.TourEntity?.ImageEntity?.Url ?? "/api/public/files?name=default-tour.webp";
-               sb.Append($"""
-                           <div class="tour-card">
-                               <img src="{imageUrl}" 
-                                    alt="Тур" 
-                                    class="tour-image">
-                               <div class="tour-info">
-                                   <div class="tour-date">{userTour.TourEntity?.TourTime}</div>
-                                   <div class="tour-price">{userTour.TourEntity?.Price}</div>
-                                   <div class="tour-description">{userTour.TourEntity?.Description}</div>
-                               </div>
-                           </div>
-                         """);
-            }
+                   <button class="tour-menu-item">
+                       <div class="tour-menu-header">
+                           <span class="tour-menu-title">Мои Туры:</span>
+                           <i class="bi bi-chevron-double-right tour-menu-arrow"></i>
+                       </div>
+   """);
+            if (userModel.UserEntity.UserTours.Any()) {
+             foreach (var userTour in userModel.UserEntity.UserTours) {
+                 var imageUrl = userTour.TourEntity?.ImageEntity?.Url ?? "/api/public/files?name=default-tour.webp";
+                 sb.Append($$"""
+                             <div class="tour-tour-card">
+                                 <img src="{imageUrl}" 
+                                      alt="Тур" 
+                                      class="tour-tour-image">
+                                 <div class="tour-tour-info">
+                                     <div class="tour-tour-date">{userTour.TourEntity?.TourTime?.ToString("dd.MM.yyyy HH:mm") ?? "–"}</div>
+                                 </div>
+                             </div>
+                 """);
+             }
          } else {
-            sb.Append("<div class=\"empty-tours\">У вас пока нет посещённых туров</div>");
+             sb.Append("""
+                 <div class="empty-tours">У вас пока нет посещённых туров</div>
+             """);
          }
 
-         sb.Append("""
-                            <div class="tour-xp">После посещения тура - начислиться 150 опыта!</div>
-                        </button>
-                    </div>
-                    <div class="rewards-card">
-                        <p class="rewards-text">
-                            Копи опыт и получай награды!<br><br>
-                            Получай 50 очков опыта за каждое фото с нашими памятниками грибов!
-                        </p>
-                        
-                        <a href="#" class="rewards-link">
-                            <span>Подробнее</span>
-                            <i class="bi bi-play-fill"></i>
-                        </a>
-                    </div>
-                   </div>
-                   </div>
-                   """);
+         sb.Append($$"""
+                             <div class="tour-tour-xp">После посещения тура - начислится 150 опыта!</div>
+                         </button>
+                     </div>
+
+                     <div class="tour-rewards-card">
+                         <p class="tour-rewards-text">
+                             Копи опыт и получай награды!<br><br>
+                             Получай 50 очков опыта за каждое фото с нашими памятниками грибов!
+                         </p>
+                         
+                         <a href="#" class="tour-rewards-link">
+                             <span>Подробнее</span>
+                             <i class="bi bi-play-fill"></i>
+                         </a>
+                     </div>
+                 </div>
+             </div>
+         """);
       }
       catch (Exception e)
       {
