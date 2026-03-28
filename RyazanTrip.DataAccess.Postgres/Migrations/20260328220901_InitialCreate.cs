@@ -58,21 +58,6 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "qr_codes",
-                columns: table => new
-                {
-                    QrId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Type = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
-                    ReferenceId = table.Column<int>(type: "integer", nullable: true),
-                    Content = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_qr_codes", x => x.QrId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "roles",
                 columns: table => new
                 {
@@ -113,10 +98,11 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                 {
                     TourId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: true),
-                    TourTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Title = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    Price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
+                    TourTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Coords = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     ImageId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -250,20 +236,20 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                 {
                     UserTourId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: true),
-                    TourId = table.Column<int>(type: "integer", nullable: true),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    TourId = table.Column<int>(type: "integer", nullable: false),
                     GuideOption = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
-                    Status = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
-                    TourEntityTourId = table.Column<int>(type: "integer", nullable: true)
+                    Status = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_user_tours", x => x.UserTourId);
                     table.ForeignKey(
-                        name: "FK_user_tours_tours_TourEntityTourId",
-                        column: x => x.TourEntityTourId,
+                        name: "FK_user_tours_tours_TourId",
+                        column: x => x.TourId,
                         principalTable: "tours",
-                        principalColumn: "TourId");
+                        principalColumn: "TourId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_user_tours_users_UserId",
                         column: x => x.UserId,
@@ -357,6 +343,27 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                 column: "ImageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tours_Price",
+                table: "tours",
+                column: "Price");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tours_Title",
+                table: "tours",
+                column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tours_Title_TourTime",
+                table: "tours",
+                columns: new[] { "Title", "TourTime" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tours_TourTime",
+                table: "tours",
+                column: "TourTime");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_bonuses_BonusId",
                 table: "user_bonuses",
                 column: "BonusId");
@@ -367,9 +374,9 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_user_tours_TourEntityTourId",
+                name: "IX_user_tours_TourId",
                 table: "user_tours",
-                column: "TourEntityTourId");
+                column: "TourId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_tours_UserId",
@@ -395,9 +402,6 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
 
             migrationBuilder.DropTable(
                 name: "payments");
-
-            migrationBuilder.DropTable(
-                name: "qr_codes");
 
             migrationBuilder.DropTable(
                 name: "sessions");

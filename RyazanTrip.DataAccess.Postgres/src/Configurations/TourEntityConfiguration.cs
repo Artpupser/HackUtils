@@ -25,7 +25,11 @@ public class TourEntityConfiguration : IEntityTypeConfiguration<TourEntity> {
 
       builder.Property(x => x.TourTime)
          .IsRequired()
-         .HasColumnType("datetime2");
+         .HasColumnType("time")
+         .HasConversion(
+            v => v.TimeOfDay,
+            v => DateTime.Today.Add(v)
+         );
 
       builder.Property(x => x.Coords)
          .IsRequired()

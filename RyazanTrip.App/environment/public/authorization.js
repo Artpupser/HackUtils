@@ -44,8 +44,6 @@ loginForm.addEventListener("submit", async (e) => {
         const result = await response.json();
         if (result["success"] === true) {
             document.location = '/profile'
-        } else {
-            alert('Ответ пришел отрицательным, ошибка в верефикации');
         }
     }  catch (e) {
         console.error('Ошибка: ', e)
@@ -69,9 +67,7 @@ registrationForm.addEventListener("submit", async (e) => {
         const result = await response.json();
         if (result["success"] === true) {
             document.location = '/profile'
-        } else {
-            alert('Ответ пришел отрицательным, ошибка в верефикации');
-        }
+        } 
     }
     catch (e) {
         console.error('Ошибка: ', e)
@@ -95,8 +91,6 @@ document.getElementById("yandex_submit").addEventListener("click", async (e) => 
         const result = await response.json();
         if (result["success"] === true) {
             document.location = '/profile'
-        } else {
-            alert('Ответ пришел отрицательным, ошибка в верефикации');
         }
     }
     catch (e) {

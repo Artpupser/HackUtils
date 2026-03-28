@@ -2,8 +2,8 @@
 
 public class UserTourEntity {
    public int UserTourId { get; set; }
-   public int? UserId { get; set; }
-   public int? TourId { get; set; }
+   public int UserId { get; set; }
+   public int TourId { get; set; }
 
    public string? GuideOption { get; set; }
    public string? Status { get; set; }

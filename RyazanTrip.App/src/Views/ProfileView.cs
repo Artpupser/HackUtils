@@ -106,7 +106,7 @@ public sealed class ProfileView : View {
                                       alt="Тур" 
                                       class="tour-tour-image">
                                  <div class="tour-tour-info">
-                                     <div class="tour-tour-date">{userTour.TourEntity?.TourTime?.ToString("dd.MM.yyyy HH:mm") ?? "–"}</div>
+                                     <div class="tour-tour-date">{userTour.TourEntity?.TourTime.ToString("dd.MM.yyyy HH:mm") ?? "–"}</div>
                                  </div>
                              </div>
                  """);

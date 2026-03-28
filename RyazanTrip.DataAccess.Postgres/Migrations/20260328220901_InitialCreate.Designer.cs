@@ -12,7 +12,7 @@ using RyazanTrip.DataAccess.Postgres;
 namespace RyazanTrip.DataAccess.Postgres.Migrations
 {
     [DbContext(typeof(RyazanTripDbContext))]
-    [Migration("20260328184953_InitialCreate")]
+    [Migration("20260328220901_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -213,29 +213,6 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                     b.ToTable("payments", (string)null);
                 });
 
-            modelBuilder.Entity("RyazanTrip.DataAccess.Postgres.Entities.QrCodeEntity", b =>
-                {
-                    b.Property<int>("QrId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QrId"));
-
-                    b.Property<string>("Content")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("ReferenceId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
-
-                    b.HasKey("QrId");
-
-                    b.ToTable("qr_codes", (string)null);
-                });
-
             modelBuilder.Entity("RyazanTrip.DataAccess.Postgres.Entities.RoleEntity", b =>
                 {
                     b.Property<int>("RoleId")
@@ -301,26 +278,43 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TourId"));
 
+                    b.Property<string>("Coords")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<DateTime?>("TourTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<TimeSpan>("TourTime")
+                        .HasColumnType("time");
 
                     b.HasKey("TourId");
 
                     b.HasIndex("ImageId");
+
+                    b.HasIndex("Price");
+
+                    b.HasIndex("Title");
+
+                    b.HasIndex("TourTime");
+
+                    b.HasIndex("Title", "TourTime")
+                        .IsUnique();
 
                     b.ToTable("tours", (string)null);
                 });
@@ -427,18 +421,15 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)");
 
-                    b.Property<int?>("TourEntityTourId")
+                    b.Property<int>("TourId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TourId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("UserTourId");
 
-                    b.HasIndex("TourEntityTourId");
+                    b.HasIndex("TourId");
 
                     b.HasIndex("UserId");
 
@@ -549,12 +540,15 @@ namespace RyazanTrip.DataAccess.Postgres.Migrations
                 {
                     b.HasOne("RyazanTrip.DataAccess.Postgres.Entities.TourEntity", "TourEntity")
                         .WithMany("UserTours")
-                        .HasForeignKey("TourEntityTourId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RyazanTrip.DataAccess.Postgres.Entities.UserEntity", "UserEntity")
                         .WithMany("UserTours")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TourEntity");
 

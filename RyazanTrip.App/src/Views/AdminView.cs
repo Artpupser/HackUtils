@@ -30,7 +30,6 @@ public sealed class AdminView : View
         var sb = Builder;
         sb.Append("""
 <div class="tour-admin-container">
-    <!-- Карточка создания тура -->
     <div class="tour-admin-card">
         <div class="tour-admin-header">
             <h2 class="tour-admin-title">Создание Тура</h2>
@@ -64,25 +63,6 @@ public sealed class AdminView : View
                         <i class="bi bi-folder-fill"></i>
                     </button>
                     <span class="tour-file-name" id="fileNameDisplay">Файл не выбран</span>
-                </div>
-            </div>
-
-            <div class="tour-form-row">
-                <label class="tour-form-label">Время Тура:</label>
-                <input name="time" type="time" class="tour-form-input" name="tourTime" required>
-            </div>
-
-            <div class="tour-form-row">
-                <label class="tour-form-label">Формат: (Можно С Детьми\Собаками)</label>
-                <div class="tour-checkbox-group">
-                    <label class="tour-checkbox-label">
-                        <input name="can_children" type="checkbox" name="withChildren" class="tour-checkbox">
-                        <span class="tour-check-text">С Детьми</span>
-                    </label>
-                    <label class="tour-checkbox-label">
-                        <input name="can_dogs" type="checkbox" name="withDogs" class="tour-checkbox">
-                        <span class="tour-check-text">С Собаками</span>
-                    </label>
                 </div>
             </div>
 

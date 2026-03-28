@@ -17,7 +17,6 @@ public class RyazanTripDbContext(DbContextOptions<RyazanTripDbContext> options) 
    public DbSet<MushroomSubmissionEntity> MushroomSubmissionsSet { get; set; }
    public DbSet<BonusEntity> BonusesSet { get; set; }
    public DbSet<UserBonusEntity> UserBonusesSet { get; set; }
-   public DbSet<QrCodeEntity> QrCodesSet { get; set; }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder) {
       modelBuilder.ApplyConfigurationsFromAssembly(typeof(RyazanTripDbContext).Assembly);
