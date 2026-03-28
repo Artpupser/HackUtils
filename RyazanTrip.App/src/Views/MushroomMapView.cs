@@ -27,14 +27,14 @@ public sealed class MushroomMapView : View
         await Start(request, response, "mushroom-quest-page", cancellationToken);
 
         var sb = Builder;
-
+        sb.Append($$"""
+           <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+           <script nonce='{{response.Nonce}}' src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+           <script nonce='{{response.Nonce}}' src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+           """);
         sb.Append($"""
         <!-- Leaflet -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-        <!-- QR Scanner -->
-        <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+       
 
         <div id="map"></div>
 

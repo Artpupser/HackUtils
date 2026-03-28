@@ -2,10 +2,8 @@ using RyazanTrip.App.Views;
 
 using PupaMVCF.Framework.Controllers;
 using PupaMVCF.Framework.Core;
-using PupaMVCF.Framework.Middleware;
 using PupaMVCF.Framework.Views;
 
-using RyazanTrip.App.Middleware;
 using RyazanTrip.App.Models;
 
 namespace RyazanTrip.App.Controllers;
