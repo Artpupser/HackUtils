@@ -27,7 +27,7 @@ public sealed class MushroomQuestView : View
         // Вставка шапки
         await Start(request, response, "tour-mushroom-page", cancellationToken);
 
-        var sb = new System.Text.StringBuilder();
+        var sb = Builder;
 
         sb.Append(@"
 <div class='tour-mushroom-page'>
@@ -195,9 +195,10 @@ public sealed class MushroomQuestView : View
     </div>
     
     <div class='position-btn' style='text-align:center; margin-top:20px;'>
-        <button class='tour-btn-book' id='startMushroomQuestBtn'>
+        <a href='/mushrooms_map' class='tour-btn-book' id='startMushroomQuestBtn'>
             ЗА ГРИБАМИ!
-        </button>
+        </a>   
+  
     </div>
 </div>
 

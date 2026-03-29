@@ -1,9 +1,26 @@
 const createTourForm = document.getElementById("createTourForm");
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+    });
+}
+
 createTourForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     try {
         const formData = new FormData(createTourForm);
         const jsonData = Object.fromEntries(formData);
+        const fileInput = document.getElementById("tourImageInput");
+        const file = fileInput.files[0];
+
+        if (file) {
+            const base64 =  await toBase64(file);
+            jsonData.image = base64; // 👈 кладём base64
+        }
+        
         const response = await fetch('/api/tours/create', {
             method: "post",
             credentials: "include",
@@ -23,3 +40,4 @@ createTourForm.addEventListener("submit", async (e) => {
         console.error('Ошибка: ', e)
     }
 })
+

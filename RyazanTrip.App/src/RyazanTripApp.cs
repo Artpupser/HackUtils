@@ -21,7 +21,7 @@ public sealed class RyazanTripApp : WebApp, IRyazanTripAppSecureContext {
       logger) {
       if (Instance != null)
          throw new InvalidOperationException("TripApp provider has already been configured");
-      S3 = configuration.GetSection("Selectel");
+      S3 = configuration.GetSection("S3");
       Context = dbContext;
       YandexMicroMicroService = yandexMicroService;
       Instance = this;

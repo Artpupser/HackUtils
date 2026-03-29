@@ -27,45 +27,38 @@ public record CreateTourRequest()
 
    [ValidRule(ValidRuleType.Need)]
    [JsonPropertyName("date")]
-   public DateOnly Date { get; set; }
+   public DateTime Date { get; set; }
 
    [ValidRule(ValidRuleType.Need)]
    [JsonPropertyName("coords_list_str")]
    public string CoordsListStr { get; set; } = string.Empty;
 
    [ValidRule(ValidRuleType.Need)]
-   [JsonPropertyName("image_base64")]
+   [JsonPropertyName("image")]
    public string ImageBase64 { get; set; } = string.Empty;
+   
 
    [ValidRule(ValidRuleType.Need)]
-   [JsonPropertyName("time")]
-   public TimeOnly Time { get; set; }
-   
-   [ValidRule(ValidRuleType.Need)]
-   [JsonPropertyName("can_children")]
-   public bool CanChildren { get; set; }
-   
-   [ValidRule(ValidRuleType.Need)]
-   [JsonPropertyName("can_dogs")]
-   public bool CanDogs { get; set; }
-
-   [ValidRule(ValidRuleType.Need)]
-   [ValidRule(ValidRuleType.Min, 0)]
+   [ValidRule(ValidRuleType.Min, 1)]
+   [ValidRule(ValidRuleType.Max, int.MaxValue)]
    [JsonPropertyName("price")]
-   public decimal Price { get; set; }
+   public float Price { get; set; }
 }
 
 public sealed class TourController : Controller {
    [ControllerHandler("/api/tours/create", HttpMethodType.POST)]
-   public async Task CreateTourHandler(Request request, Response response, CancellationToken cancellationToken) {
+   private async Task CreateTourHandler(Request request, Response response, CancellationToken cancellationToken) {
       try {
-         var user = await UserModel.LoadUserFromRequest(request.Session!, cancellationToken);
-         if (user != null || !user.CheckAdmin()) {
+         var userModel = await UserModel.LoadUserFromRequest(request.Session!, cancellationToken);
+         WebApp.SecureContextInstance.Logger.LogInformation("Create tour handler invoked by user {UserId}", userModel?.UserEntity.Id);
+         if (userModel == null || !userModel.CheckAdmin()) {
             response.ErrorStack.PushStack("You don't have permissions to create tour");
+            WebApp.SecureContextInstance.Logger.LogInformation("Not admin");
             await response.SendAsync(cancellationToken);
             return;
          }
          var content = await request.ReadContentT<CreateTourRequest>(cancellationToken);
+         WebApp.SecureContextInstance.Logger.LogInformation("Read tour creation request content: {Content}", content);
          if (await ValidatorManager.Valid(request, response, content, cancellationToken)) {
             WebApp.SecureContextInstance.Logger.LogInformation("Create tour handler invoked, {Title}", content.Name);
          
@@ -73,9 +66,8 @@ public sealed class TourController : Controller {
                Title = content.Name,
                Description = content.Description,
                Price = content.Price,
-               TourTime = content.Date.ToDateTime(content.Time),
+               TourTime = content.Date,
                Coords = content.CoordsListStr,
-               
             };
          
             ImageModel? image = null;
@@ -83,12 +75,19 @@ public sealed class TourController : Controller {
             image = await ImageModel.UploadAndGetFromRequestAsync(new ImageRequest() {
                ImageBase64 = base64Data
             }, cancellationToken);
-
             tourEntity.ImageId = image.ImageEntity.ImageId;
+
+            WebApp.SecureContextInstance.Logger.LogInformation("Image uploaded, got image model: {ImageModel}", image.ImageEntity.Url);
          
             await RyazanTripApp.Instance.Context.ToursSet.AddAsync(tourEntity, cancellationToken);
+            WebApp.SecureContextInstance.Logger.LogInformation("Added");
             var changes = await RyazanTripApp.Instance.Context.SaveChangesAsync(cancellationToken);
+            WebApp.SecureContextInstance.Logger.LogInformation("Saved, changes count: {Changes}", changes);
             await response.SendSuccess(changes > 0, cancellationToken);
+         } else {
+            foreach (var s in response.ErrorStack.StackContentList) {
+               WebApp.SecureContextInstance.Logger.LogError("StackError: {E}", s);
+            }
          }
       } catch (Exception e) {
          WebApp.SecureContextInstance.Logger.LogError("Create tour handler error: {E}", e);

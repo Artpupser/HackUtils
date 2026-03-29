@@ -128,7 +128,7 @@ public sealed class ProfileView : View {
                              Получай 50 очков опыта за каждое фото с нашими памятниками грибов!
                          </p>
                          
-                         <a href="#" class="tour-rewards-link">
+                         <a href="/mushrooms" class="tour-rewards-link">
                              <span>Подробнее</span>
                              <i class="bi bi-play-fill"></i>
                          </a>

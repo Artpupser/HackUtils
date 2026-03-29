@@ -22,13 +22,13 @@ var mushrooms=[
  {id:4,name:"Грибная капелла",coords:[54.6258,39.7472],img:"/api/public/files?name=грибная_капелла.webp"},
  {id:5,name:"Грибная команда",coords:[54.6263,39.7418],img:"/api/public/files?name=грибная_команда.webp"},
  {id:6,name:"Гриб путешественник",coords:[54.6330,39.7450],img:"/api/public/files?name=гриб_путешственник.webp"},
- {id:7,name:"Гриб профессор",coords:[54.6335,39.7445],img:"environment/public/гриб_профессор.webp"},
- {id:8,name:"Гриб дозорный",coords:[54.6351,39.7469],img:"environment/public/гриб_дозорный.webp"},
- {id:9,name:"Гриб художник",coords:[54.6355,39.7478],img:"environment/public/Гриб_художник.webp"},
- {id:10,name:"Гриб Рыбак",coords:[54.6340,39.7520],img:"environment/public/гриб_рыбак.webp"},
- {id:11,name:"Гриб Мудррец",coords:[54.6322,39.7454],img:"environment/public/гриб_мудрец.webp"},
- {id:12,name:"Гриб Пионер",coords:[54.6300,39.7385],img:"environment/public/гриб_пионер.webp"},
- {id:13,name:"Семейство «Грибов с глазами»",coords:[54.6295,39.7448],img:"environment/public/грибы_с_глазами.webp"}
+ {id:7,name:"Гриб профессор",coords:[54.6335,39.7445],img:"/api/public/files?name=гриб_профессор.webp"},
+ {id:8,name:"Гриб дозорный",coords:[54.6351,39.7469],img:"/api/public/files?name=гриб_дозорный.webp"},
+ {id:9,name:"Гриб художник",coords:[54.6355,39.7478],img:"/api/public/files?name=Гриб_художник.webp"},
+ {id:10,name:"Гриб Рыбак",coords:[54.6340,39.7520],img:"/api/public/files?name=гриб_рыбак.webp"},
+ {id:11,name:"Гриб Мудррец",coords:[54.6322,39.7454],img:"/api/public/files?name=гриб_мудрец.webp"},
+ {id:12,name:"Гриб Пионер",coords:[54.6300,39.7385],img:"/api/public/files?name=гриб_пионер.webp"},
+ {id:13,name:"Семейство «Грибов с глазами»",coords:[54.6295,39.7448],img:"/api/public/files?name=грибы_с_глазами.webp"}
 ];
 
 let mushroomExp = new Array(mushrooms.length).fill(0);
@@ -65,7 +65,10 @@ function buildRouteToNext(){
  });
 
  var marker=L.marker(next.coords,{icon:icon}).addTo(map);
- marker.bindPopup(`<b>${next.name}</b><br><img src="${next.img}" width="150"><br><button onclick="openScanner()">Сканировать QR</button>`);
+ marker.bindPopup(`<b>${next.name}</b><br><img src="${next.img}" width="150"><br><button id="openScannerBtn" >Сканировать QR</button>`);
+ document.getElementById("openScannerBtn").addEventListener('click',() => {
+        openScanner();
+ });
 
  L.marker(lastCoords).addTo(map).bindPopup("Отсюда").openPopup();
 

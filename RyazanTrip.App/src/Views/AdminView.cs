@@ -25,7 +25,7 @@ public sealed class AdminView : View
 
     public override async Task Html(Request request, Response response, CancellationToken cancellationToken)
     {
-        await Start(request, response, "tour-app tour-admin-page", cancellationToken);
+        await Start(request, response, "tour-app", cancellationToken);
 
         var sb = Builder;
         sb.Append("""
@@ -34,7 +34,7 @@ public sealed class AdminView : View
         <div class="tour-admin-header">
             <h2 class="tour-admin-title">Создание Тура</h2>
         </div>
-        <form id="createTourForm" class="tour-admin-form">
+        <form id="createTourForm" class="tour-admin-form"  method="post" enctype="multipart/form-data">
             <div class="tour-form-row">
                 <label class="tour-form-label">Название Тура:</label>
                 <input name="name" type="text" class="tour-form-input" name="tourName" required>
@@ -58,11 +58,8 @@ public sealed class AdminView : View
             <div class="tour-form-row">
                 <label class="tour-form-label">Картинка Тура:</label>
                 <div class="tour-file-button-wrapper">
-                    <input name="image_base64" type="file" class="tour-file-input-hidden" name="tourImage" accept="image/*" id="tourImageInput">
-                    <button type="button" class="tour-btn-file" onclick="document.getElementById('tourImageInput').click()">
-                        <i class="bi bi-folder-fill"></i>
-                    </button>
-                    <span class="tour-file-name" id="fileNameDisplay">Файл не выбран</span>
+                    <input type="file" class="" name="image" accept="image/*" id="tourImageInput">
+                    <span class="tour-file-name" id="fileNameDisplay">Выбор изображения</span>
                 </div>
             </div>
 

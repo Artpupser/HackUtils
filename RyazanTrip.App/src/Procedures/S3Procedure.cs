@@ -23,16 +23,15 @@ public sealed class S3Procedure : IDisposable {
    private readonly IAmazonS3 _s3Client;
    private readonly TransferUtility _transferUtility;
    public string BucketName { get; set; } = string.Empty;
-   public S3Procedure(IConfiguration configuration) {
-      var s3Configuration = configuration.GetSection("Selectel");
-      BucketName = s3Configuration["BucketName"] ?? throw new Exception("BucketName is not configured");
+   public S3Procedure(IConfigurationSection configuration) {
+      BucketName = configuration["BucketName"] ?? throw new Exception("BucketName is not configured");
       var config = new AmazonS3Config
       {
-         ServiceURL = s3Configuration["EndPoint"] ?? throw new Exception("EndPoint is not configured"),         
+         ServiceURL = configuration["EndPoint"] ?? throw new Exception("EndPoint is not configured"),         
          ForcePathStyle = true,          
          RegionEndpoint = Amazon.RegionEndpoint.USEast1 // фиктивный, т.к. используем ServiceURL
       };
-      _s3Client = new AmazonS3Client( s3Configuration["AccessKey"] ?? throw new Exception("AccessKey is not configured"), s3Configuration["SecretKey"] ?? throw new Exception("SecretKey is not configured"), config);
+      _s3Client = new AmazonS3Client( configuration["AccessKey"] ?? throw new Exception("AccessKey is not configured"), configuration["SecretKey"] ?? throw new Exception("SecretKey is not configured"), config);
       _transferUtility = new TransferUtility(_s3Client);
    }
    public async Task<S3UploadResult> UploadImageBytesAsync(byte[] imageBytes, string objectKey, CancellationToken cancellationToken) {
