@@ -46,7 +46,7 @@ public sealed class ProfileView : View {
          } else {
             nextLevelXp = userModel.UserEntity.LevelEntity?.RequiredExp ?? 0;
          }
-
+         
          var town = userModel.UserEntity.Town ?? "Рязань";
          
           sb.Append($$"""
@@ -62,7 +62,7 @@ public sealed class ProfileView : View {
                   </div>
                   
                   <div class="tour-user-details">
-                      <h1 class="tour-user-name">{{userModel.UserEntity.Username}}</h1>
+                      <h1 class="tour-user-name">{{(userModel.UserEntity.RoleId > 1 ? "(Администратор)" : string.Empty )}} {{userModel.UserEntity.Username}}</h1>
                       
                       <div class="tour-stats-row">
                           <div class="tour-stat-badge level">
@@ -70,13 +70,14 @@ public sealed class ProfileView : View {
                               <span class="tour-level-number">{{userModel.UserEntity.LevelEntity?.Name ?? "Неизвестно"}}</span>
                           </div>
                           
-                          <div class="tour-stat-badge awards">
+                          <a href="/rewards" class="tour-stat-badge awards">
                               <span>Мои Награды</span>
-                          </div>
+                          </a>
+                          {{(userModel.UserEntity.RoleId > 1 ? @"<a href='/admin' class='tour-stat-badge awards'><span>Панель управления</span></a>" : string.Empty)}}
                       </div>
                       
                       <div class="tour-xp-info">
-                          <span>До следующего уровня:</span>
+                          <span>До следующего уровня:</span> 
                           <span class="tour-xp-needed">{{nextLevelXp}} опыта</span>
                       </div>
                   </div>

@@ -24,7 +24,7 @@ public sealed class AuthorizationView : View {
    #endregion
 
    public override async Task Html(Request request, Response response, CancellationToken cancellationToken) {
-      await Start(request, response, "tour-app", cancellationToken);
+      await Start(request, response, "", cancellationToken);
       var sb = Builder;
       sb.Append("""
                 <div class="tour-auth-container">

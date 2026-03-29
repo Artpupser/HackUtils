@@ -26,7 +26,7 @@ public sealed class RewardsView : View
     {
         await Start(request, response, "tour-app", cancellationToken);
 
-        var sb = new System.Text.StringBuilder();
+        var sb = Builder;
 
         sb.Append("""
 

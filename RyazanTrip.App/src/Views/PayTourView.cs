@@ -89,7 +89,6 @@ public sealed class PayTourView : View
     </div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО БРОНИРОВАНИЯ -->
 <div id='booking-modal' class='tour-modal-overlay' onclick='closeBookingModal(event)'>
     <div class='tour-booking-modal-window' onclick='event.stopPropagation()'>
         <button class='tour-modal-close' onclick='closeBookingModal()'>

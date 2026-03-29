@@ -59,11 +59,24 @@ public sealed class ViewController : Controller {
    private async Task MushroomsPageHandler(Request request, Response response, CancellationToken cancellationToken) {
       await SendPage(new MushroomQuestView(), request, response, cancellationToken);
    }
+
+
+   [ControllerHandler("/tours", HttpMethodType.GET)]
+   private async Task ToursPageHandler(Request request, Response response, CancellationToken cancellationToken) {
+      await SendPage(new TourView(), request, response, cancellationToken);
+   }
    
    [ControllerHandler("/mushrooms_map", HttpMethodType.GET)]
    private async Task MushroomsMapPageHandler(Request request, Response response, CancellationToken cancellationToken) {
       await SendPage(new MushroomMapView(), request, response, cancellationToken);
    }
+   
+      
+   [ControllerHandler("/rewards", HttpMethodType.GET)]
+   private async Task RewardsPageHandler(Request request, Response response, CancellationToken cancellationToken) {
+      await SendPage(new RewardsView(), request, response, cancellationToken);
+   }
+
 
 
    private static async Task SendPage(View view, Request request, Response response,

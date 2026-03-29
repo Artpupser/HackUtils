@@ -43,7 +43,7 @@ public sealed class MainView : View {
                       <div class="col-lg-6">
                         <h2>Обзорная экскурсия<br>на катере</h2>
                         <p class="date fw-bold">Дата: 5 Июля</p>
-                        <button class="but_tour fw-bold btn btn-outline-dark rounded-pill px-4">Узнать больше!</button>
+                        <a href='/tours' class="but_tour fw-bold btn btn-outline-dark rounded-pill px-4">Узнать больше!</a>
                       </div>
                     </div>
                   </div>
@@ -110,7 +110,7 @@ public sealed class MainView : View {
                   </div>
                 
                 
-                  <div class="slider">
+                  <div class="slider slider-container">
                 
                   <button class="btn_slide prev fs-1"><img src="/api/public/files?name=caret-left-fill.webp"></button>
                 

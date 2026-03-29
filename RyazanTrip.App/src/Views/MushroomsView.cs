@@ -25,7 +25,7 @@ public sealed class MushroomQuestView : View
     public override async Task Html(Request request, Response response, CancellationToken cancellationToken)
     {
         // Вставка шапки
-        await Start(request, response, "tour-mushroom-page", cancellationToken);
+        await Start(request, response, string.Empty, cancellationToken);
 
         var sb = Builder;
 
@@ -203,13 +203,10 @@ public sealed class MushroomQuestView : View
 </div>
 
 <script>
-<<<<<<< HEAD
     document.getElementById(""startMushroomQuestBtn"").onclick = function(){
         window.location.href = ""MushroomMapView""; 
-=======
     document.getElementById('startMushroomQuestBtn').onclick = function(){
         window.location.href = '/map'; 
->>>>>>> 0b404f7310ddb05ee1c06e195cb307b498ddd429
     };
 </script>
 

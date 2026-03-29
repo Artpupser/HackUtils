@@ -127,14 +127,11 @@ body, html {margin:0; height:100%; font-family:sans-serif;}
 <div id="infoBox">Нажмите «Начать квест»</div>
 <button id="startBtn">📍 Начать квест</button>
 
-<div id="scannerModal">
-  <div id="scannerWindow">
-    <div id="scannerHeader">
-      <span>Сканируйте QR гриба 🍄</span>
-      <button id="closeScanner">✕</button>
+<div id="scannerModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:10000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:20px; border-radius:10px; max-width:90vw; max-height:90vh;">
+        <div id="scanner" style="width:300px; height:300px; margin:0 auto;"></div>
+        <button id="closeScanner" style="margin-top:10px; padding:10px 20px; background:#ff4444; color:white; border:none; border-radius:5px;">Закрыть</button>
     </div>
-    <div id="scanner"></div>
-  </div>
 </div>
 
 <div id="finalModal" style="display:none;">
@@ -145,7 +142,7 @@ body, html {margin:0; height:100%; font-family:sans-serif;}
 """);
         // ТВОЙ app.js подключаем ПОСЛЕДНИМ и с defer
         sb.Append($"""
-                    <script nonce='{response.Nonce}' src="/api/public/files?name=app.js" defer></script>
+                    <script nonce='{response.Nonce}' src="/api/public/files?name=app.js" defer ></script>
                     """);
 
         await End(request, response, cancellationToken);
